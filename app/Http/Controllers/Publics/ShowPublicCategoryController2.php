@@ -7,19 +7,25 @@ use App\Http\Requests\CategoryAndCollectionPublicRequest\CategoryPublicGetReques
 
 use App\Interfaces\TaxonomyInterface;
 
-
-class ShowPublicCategoryController extends BaseController
+class ShowPublicCategoryController2 extends BaseController
 {
-
+    
     private $taxonomyInterface;
 
     public function __construct(TaxonomyInterface $taxonomyInterface)
     {
         $this->taxonomyInterface            = $taxonomyInterface;
     }
-
-     public function show(CategoryPublicGetRequest $request)
+    /**
+     * @lrd:start
+     * # keyword untuk pencarian akan mencari :  taxonomy name dan atau taxonomy slug dan atau taxonomy parent dan atau taxonomy type
+     *
+     *
+     * @lrd:end
+     */
+    public function show(CategoryPublicGetRequest $request)
     {
+dd('a');
         $selectedColumn = array('*');
 
         $getTaxonomy = $this->taxonomyInterface->show($request, $selectedColumn);

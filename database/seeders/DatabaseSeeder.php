@@ -27,7 +27,8 @@ class DatabaseSeeder extends Seeder
             //seeder permission end
             Taxo_typeSeeder::class,
             UsersSeeder::class,
-            User_appsSeeder::class
+            User_appsSeeder::class,
+            TaxonomySeeder::class
          
           
         ]);

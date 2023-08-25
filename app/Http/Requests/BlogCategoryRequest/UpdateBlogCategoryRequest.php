@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\BlogRequest;
+namespace App\Http\Requests\BlogCategoryRequest;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CreateBlogRequest extends FormRequest
+class UpdateBlogCategoryRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,11 +24,11 @@ class CreateBlogRequest extends FormRequest
     public function rules()
     {
         return  [
-            'cover'             =>   'required',
-            'title'             =>   'required',
-            'short_desc'        =>   'required',  
-            'long_desc'         =>   'required',
-            'fk_category'       =>   'required||exists:taxo_lists,id,taxonomy_type,7',
+            'name'   => 'required|string|max:255',
+            'slug'   => 'required|string|unique:category_blogs,slug',
+            'status' => 'required|in:ACTIVE,INACTIVE',
+            'id'     =>   'required',
+          
             
         ];
     }

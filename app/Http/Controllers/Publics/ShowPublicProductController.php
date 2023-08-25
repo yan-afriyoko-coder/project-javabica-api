@@ -42,7 +42,7 @@ class ShowPublicProductController extends BaseController
             'message'=> 'error when show product'
         ]);
 
-        return   $this->handleError( $data,$get['queryMessage'],$request->all(),str_replace('/','.',$request->path()),422);
+        return  $this->handleError( $data,$get['queryMessage'],$request->all(),str_replace('/','.',$request->path()),422);
 
     }
 }

@@ -15,10 +15,16 @@ class Blog extends Model
         'short_desc',
         'long_desc',
         'fk_category',
+        'slug'
     ];
+
+    protected $with = [
+        "fk_category"
+    ];
+
 
     public function fk_category()
     {
-        return $this->belongsTo(Taxo_list::class, 'fk_category', 'id')->where('taxonomy_type',6);
+        return $this->belongsTo(Taxo_list::class, 'fk_category', 'id');
     }
 }

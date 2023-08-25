@@ -5,7 +5,7 @@ use Illuminate\Http\Request;
 
 interface BlogInterface {
 
-    public function show($request,$getOnlyColumn,$returnCollection);
+    public function show($request,$getOnlyColumn);
     public function store(array $data,$returnCollection);
     public function update($id,array $data,$return_collection);
     public function destroy(int $id);

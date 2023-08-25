@@ -26,6 +26,7 @@ use App\Http\Controllers\ShippingAddressController;
 use App\Http\Controllers\ShippingController;
 use App\Http\Controllers\TaxonomyController;
 use App\Http\Controllers\UsersController;
+use App\Http\Controllers\Publics\ShowPublicBlogsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -42,11 +43,13 @@ Route::group(['prefix' => '/v1'], function () {
 
     Route::group(['prefix' => '/publics'], function () {
 
+        Route::get('category/show', [ShowPublicCategoryController::class, 'show']);
          Route::get('product/show', [ShowPublicProductController::class, 'show']);
-         Route::get('category/show', [ShowPublicCategoryController::class, 'show']);
+         
          Route::get('collection/show', [ShowPublicCollectionController::class, 'show']);
          Route::post('cart/create', [CartController::class, 'create']);
-       
+         Route::get('blog/show', [ShowPublicBlogsController::class, 'show']);
+            Route::get('category-blog/show', [ShowPublicCategoryController::class, 'show']);
       
         // Route::group(['prefix' => '/invoice'], function () {
         //     Route::get('show', [OrderInvoiceController::class, 'show']);
@@ -255,12 +258,15 @@ Route::group(['prefix' => '/v1'], function () {
                    
                 });
 
+                
+
                 Route::group(['prefix' => '/price'], function () {
 
                     Route::get('show', [ProductPriceController::class, 'show']);
                     Route::post('upsert', [ProductPriceController::class, 'upsert']);
                     Route::delete('destroy', [ProductPriceController::class, 'destroy']);
                 });
+
             });
         });
     });

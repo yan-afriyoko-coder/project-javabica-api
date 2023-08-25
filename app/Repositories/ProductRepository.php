@@ -47,8 +47,6 @@ class ProductRepository extends BaseController implements ProductInterface
                                             ])->where('products.status','PUBLISH')->join('product_variants', 'products.id', '=', 'product_variants.fk_product_id');
                                           
                                           
-                                   
-                                       
                                       if(request()->has('sort_by') && request()->get('sort_by') == 'product_price')
                                        { 
                                            $getData->orderBy('price',request()->get('sort_type'));

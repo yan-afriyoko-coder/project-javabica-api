@@ -8,15 +8,100 @@ use App\Http\Resources\Blog\BlogShowAllResource;
 use App\Interfaces\BlogInterface;
 use App\Models\Blog;
 use Illuminate\Pipeline\Pipeline;
-
+use App\PipelineFilters\BlogPipeline\GetByKey;
+use App\PipelineFilters\BlogPipeline\GetByWord;
+use App\PipelineFilters\BlogPipeline\UseSort;
 
 
 
 class BlogRepository extends BaseController implements BlogInterface 
 {
-    public function show($request,$getOnlyColumn,$returnCollection) {
+    public function show($request,$getOnlyColumn,$collection='show_all') {
+        try {
+          
+            $getData =  app(Pipeline::class)
+                                ->send(Blog::query())
+                                ->through([
+                                    GetByKey::class,
+                                    GetByWord::class,
+                                    UseSort::class,
+                                ])
+                                ->thenReturn();
+                            
+                                if(request()->get('paginate') == true)
+                                {
+                                    $outputData            =  $getData->paginate(request()->get('per_page') ,$getOnlyColumn,'page',request()->get('page'));
+                                    $getCollection         =  $outputData->getCollection();
+                                }
+                                else
+                                {   
+                                    $getCollection  =   $getData->limit(250)->get();
+                                }
+                                
+                                $itemsTransformed = $getCollection
+                                ->map(function($item) use($collection)  { 
+                                    return $this->resourceFormat($collection,$item);
+                                    
+                                });
 
+                                if (request()->has('sort_type')) { 
+                                    $getData = $getData->orderBy('created_at', request()->get('sort_type'));
+                                }
+
+                                if (request()->has('category_id')) { 
+                                    $getData->whereHas('fk_category', function ($query) {
+                                        $query->where('taxonomy_slug', request()->get('category_id'));
+                                    });
+                                }
+
+                                if(count($getCollection) > 1 || request()->get('paginate') == true)
+                                {
+                                    
+                                    $itemsTransformed =  $itemsTransformed->toArray();
+                                }
+                                else
+                                {
+                                    $itemsTransformed =  $itemsTransformed->first();
+                                }
+                                
+                                
+                            if(request()->get('paginate') == true)
+                            {
+                                $outputData = new \Illuminate\Pagination\LengthAwarePaginator(
+                                    $itemsTransformed,
+                                    $outputData->total(),
+                                    $outputData->perPage(),
+                                    $outputData->currentPage(), [
+                                        'path' => \Request::url(),
+                                        'query' =>request()->all()
+                                    ]
+                                );
+
+                                $message =   'get blog with paginate success';
+                            }
+                            else {
+                            
+                                $outputData =  $itemsTransformed;
+                                if(count($getCollection) > 1 )
+                                {
+                                    $message =   'get blog data success without pagination max 250 data';
+                                }
+                                else
+                                {
+                                    $message =   'get blog data success';
+                                }
+                                
+                        }
+                                
+
+            return $this->handleQueryArrayResponse($outputData,$message);
+
+        } catch (\Exception $e) {
+
+            return $this->handleQueryErrorArrayResponse($e->getMessage(),'error when get products');
         
+        }
+           
     }
     public function store($data,$returnColumn) {
 
