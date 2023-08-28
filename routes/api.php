@@ -90,11 +90,6 @@ Route::group(['prefix' => '/v1'], function () {
             });
         });
 
-        Route::group(['prefix' => '/blog'], function () {
-
-            Route::post('create', [BlogController::class, 'create']);
-           
-        });
 
         Route::group(['prefix' => '/store'], function () {
 
@@ -108,12 +103,19 @@ Route::group(['prefix' => '/v1'], function () {
             
         });
 
-        Route::group(['prefix' => '/blog-category'], function () {
-            Route::get('show', [BlogCategoryController::class, 'show']);
-            Route::post('create', [BlogCategoryController::class, 'create']);
-            Route::post('update', [BlogCategoryController::class, 'update']);
-            Route::delete('destroy', [BlogCategoryController::class, 'delete']);
-        });
+    });
+    
+    Route::group(['prefix' => '/blog'], function () {
+        Route::get('show', [BlogController::class, 'show']);
+        Route::post('create', [BlogController::class, 'create']);
+        Route::post('update', [BlogController::class, 'update']);
+        Route::delete('destroy', [BlogController::class, 'delete']);
+    });
+    Route::group(['prefix' => '/blog-category'], function () {
+        Route::get('show', [BlogCategoryController::class, 'show']);
+        Route::post('create', [BlogCategoryController::class, 'create']);
+        Route::post('update', [BlogCategoryController::class, 'update']);
+        Route::delete('destroy', [BlogCategoryController::class, 'delete']);
     });
 
     Route::group(['prefix' => '/private', 'middleware' => ['auth:sanctum', 'abilities:api_access']], function () {

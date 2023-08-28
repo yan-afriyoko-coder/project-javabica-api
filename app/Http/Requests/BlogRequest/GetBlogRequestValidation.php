@@ -3,8 +3,10 @@
 namespace App\Http\Requests\BlogRequest;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
-class PublicBlogGetRequest extends FormRequest
+class GetBlogRequestValidation extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,7 +15,8 @@ class PublicBlogGetRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+      return true;
+
     }
 
     /**
@@ -21,46 +24,41 @@ class PublicBlogGetRequest extends FormRequest
      *
      * @return array
      */
+    
     public function rules()
     {
+    
         return [
-            'search'         =>   [
+            'keyword'         =>   [
                 'nullable',
-            ],
-            'sort_type'       =>   [
-                'nullable',
-                'in:asc,desc',
+             ],
+             'sort_type'      => [
+               'nullable',
+               'in:asc,desc',
             ],
             'paginate'       =>   [
                 'nullable',
                 'boolean',
                 'required_with:page,per_page',
-            ],
+             ],
             'per_page'        =>   [
                 'nullable',
                 'numeric',
                 'required_with:paginate',
                 ' required_if:paginate,1,true'
-            ],
+             ],
             'page'           =>   [
                 'nullable',
                 'numeric',
                 'required_with:paginate,per_page',
                 ' required_if:paginate,1,true'
-
-            ],
-            'category_id'      =>   [
+               
+             ],
+            'by_id'           =>   [
                 'nullable',
-                'string',
-            
-            ],
-            'hot_news'      =>   [
-                'nullable',
-                'string',
-            ],
-
-            
-
+                'numeric',
+                'exists:blogs,id'
+             ],
         ];
     }
 }

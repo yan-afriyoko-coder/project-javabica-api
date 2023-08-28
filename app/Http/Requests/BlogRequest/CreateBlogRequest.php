@@ -28,7 +28,7 @@ class CreateBlogRequest extends FormRequest
             'title'             =>   'required',
             'short_desc'        =>   'required',  
             'long_desc'         =>   'required',
-            'fk_category'       =>   'required||exists:taxo_lists,id,taxonomy_type,7',
+            'fk_category'       =>   'required||exists:category_blogs,id',
             
         ];
     }
