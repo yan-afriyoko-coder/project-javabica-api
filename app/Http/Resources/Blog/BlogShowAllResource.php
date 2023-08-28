@@ -3,6 +3,7 @@
 namespace App\Http\Resources\Blog;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use App\Http\Resources\TaxonomyResource\TaxonomyShowAllResource;
 
 class BlogShowAllResource extends JsonResource
 {
@@ -14,6 +15,7 @@ class BlogShowAllResource extends JsonResource
      */
     public function toArray($request)
     {
+
         return [
             'id'                   => $this->resource['data']->id,
             'cover'                => $this->resource['data']->cover,
@@ -23,6 +25,8 @@ class BlogShowAllResource extends JsonResource
             'embed_map'            => $this->resource['data']->embed_map,
             'slug'                 => $this->resource['data']->slug,
             'created_at'           => $this->resource['data']->created_at,
+            'hot_news'             => $this->resource['data']->hot_news,
+            'category'             => $this->resource['data']->category,
         ];
     }
 }

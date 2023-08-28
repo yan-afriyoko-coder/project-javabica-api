@@ -12,11 +12,10 @@ use App\PipelineFilters\BlogPipeline\GetByKey;
 use App\PipelineFilters\BlogPipeline\GetByWord;
 use App\PipelineFilters\BlogPipeline\UseSort;
 
-
-
 class BlogRepository extends BaseController implements BlogInterface 
 {
     public function show($request,$getOnlyColumn,$collection='show_all') {
+       
         try {
           
             $getData =  app(Pipeline::class)
@@ -27,6 +26,7 @@ class BlogRepository extends BaseController implements BlogInterface
                                     UseSort::class,
                                 ])
                                 ->thenReturn();
+
                             
                                 if(request()->get('paginate') == true)
                                 {
@@ -44,15 +44,6 @@ class BlogRepository extends BaseController implements BlogInterface
                                     
                                 });
 
-                                if (request()->has('sort_type')) { 
-                                    $getData = $getData->orderBy('created_at', request()->get('sort_type'));
-                                }
-
-                                if (request()->has('category_id')) { 
-                                    $getData->whereHas('fk_category', function ($query) {
-                                        $query->where('taxonomy_slug', request()->get('category_id'));
-                                    });
-                                }
 
                                 if(count($getCollection) > 1 || request()->get('paginate') == true)
                                 {
@@ -92,13 +83,37 @@ class BlogRepository extends BaseController implements BlogInterface
                                 }
                                 
                         }
-                                
+
+                        if (request()->get('slug')) {
+                            $blog = Blog::where('slug', request()->get('slug'))->first();
+                    
+                            if (!$blog) {
+                                return $this->handleError([], 'Blog not found', request()->all(), \Request::path(), 404);
+                            }
+
+                            $recommendedBlogs = Blog::where('fk_category',$blog->fk_category)
+                                ->where('id', '<>', $blog->id)
+                                ->limit(3) 
+                                ->get();
+                
+                    
+                            $recommendedTransformed = $recommendedBlogs->map(function ($item) use ($collection) {
+                                return $this->resourceFormat($collection, $item);
+                            });
+
+                            $combinedData = [
+                                'main_blog' => $outputData,
+                                'recommended_blogs' => $recommendedTransformed
+                            ];
+
+                            return $this->handleQueryArrayResponse($combinedData, $message);
+                        }
 
             return $this->handleQueryArrayResponse($outputData,$message);
 
         } catch (\Exception $e) {
 
-            return $this->handleQueryErrorArrayResponse($e->getMessage(),'error when get products');
+            return $this->handleQueryErrorArrayResponse($e->getMessage(),'error when get blog');
         
         }
            
@@ -150,10 +165,7 @@ class BlogRepository extends BaseController implements BlogInterface
       
 
     }
-    public function destroy($id) {
-
-       
-    }
+    public function destroy($id) {}
     private  function resourceFormat($returnCollection,$data) {
 
         if($returnCollection == 'show_all') //faq service & experience
@@ -166,5 +178,60 @@ class BlogRepository extends BaseController implements BlogInterface
        
        
     }
+
+    public function showWithRecommendations($request, $getOnlyColumn, $collection = 'show_all') {
+        try {
+            $blog = Blog::where('slug', $request->get('slug'))->first();
+
+            if (!$blog) {
+                return $this->handleError([], 'Blog not found', $request->all(), Request::path(), 404);
+            }
+
+            $category_id = $blog->fk_category->taxonomy_slug;
+
+            $getData = app(Pipeline::class)
+                ->send(Blog::query())
+                ->through([
+                    GetByWord::class,
+                    UseSort::class,
+                ])
+                ->thenReturn();
+
+            $getData->where('id', '!=', $blog->id)
+                ->whereHas('fk_category', function ($query) use ($category_id) {
+                    $query->where('taxonomy_slug', $category_id);
+                });
+
+            if ($request->get('paginate') == true) {
+                $outputData = $getData->paginate($request->get('per_page'), $getOnlyColumn, 'page', $request->get('page'));
+                $getCollection = $outputData->getCollection();
+            } else {
+                $getCollection = $getData->limit(250)->get();
+            }
+
+            $itemsTransformed = $getCollection
+                ->map(function ($item) use ($collection) {
+                    return $this->resourceFormat($collection, $item);
+                });
+
+            if (count($getCollection) > 1 || $request->get('paginate') == true) {
+                $itemsTransformed = $itemsTransformed->toArray();
+            } else {
+                $itemsTransformed = $itemsTransformed->first();
+            }
+
+            // Combine the main blog with recommendations
+            $combinedData = [
+                'main_blog' => $this->resourceFormat($collection, $blog),
+                'recommended_blogs' => $itemsTransformed
+            ];
+
+            return $this->handleQueryArrayResponse($combinedData, 'get main blog and recommended blogs success');
+
+        } catch (\Exception $e) {
+            return $this->handleQueryErrorArrayResponse($e->getMessage(), 'error when get main blog and recommended blogs');
+        }
+    }
+
    
 }

@@ -19,12 +19,11 @@ class Blog extends Model
     ];
 
     protected $with = [
-        "fk_category"
+        "category"
     ];
-
-
-    public function fk_category()
+    
+    public function category()
     {
-        return $this->belongsTo(Taxo_list::class, 'fk_category', 'id');
+        return $this->belongsTo(CategoryBlog::class, 'fk_category', 'id'); // Mengubah relasi ke model CategoryBlog
     }
 }

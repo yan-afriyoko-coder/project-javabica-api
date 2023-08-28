@@ -10,11 +10,21 @@ class GetByKey
   public function handle($query, Closure $next)
   { 
 
-      if (request()->has('by_id') && request()->get('by_id'))
+      if (request()->has('slug') && request()->get('slug'))
       {
-          $query->where('id', request()->get('by_id'));
+          $query->where('slug', request()->get('slug'));
       }
-  
+
+      if (request()->has('category_id') && request()->get('category_id'))
+      {   
+          $query->where('fk_category', request()->get('category_id'));
+      }
+
+      if (request()->has('hot_news') && request()->get('hot_news'))
+      {   
+          $query->where('hot_news', request()->get('hot_news'));
+      }
+      
     return $next($query);
   }
 }

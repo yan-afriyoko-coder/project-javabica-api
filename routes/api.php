@@ -27,6 +27,8 @@ use App\Http\Controllers\ShippingController;
 use App\Http\Controllers\TaxonomyController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\Publics\ShowPublicBlogsController;
+use App\Http\Controllers\Publics\ShowPublicCategoryBlogController;
+use App\Http\Controllers\BlogCategoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -43,13 +45,15 @@ Route::group(['prefix' => '/v1'], function () {
 
     Route::group(['prefix' => '/publics'], function () {
 
-        Route::get('category/show', [ShowPublicCategoryController::class, 'show']);
+         Route::get('category/show', [ShowPublicCategoryController::class, 'show']);
          Route::get('product/show', [ShowPublicProductController::class, 'show']);
          
          Route::get('collection/show', [ShowPublicCollectionController::class, 'show']);
          Route::post('cart/create', [CartController::class, 'create']);
          Route::get('blog/show', [ShowPublicBlogsController::class, 'show']);
-            Route::get('category-blog/show', [ShowPublicCategoryController::class, 'show']);
+         Route::get('blog/hot', [ShowPublicBlogsController::class, 'hot']);
+         Route::get('category-blog/show', [ShowPublicCategoryBlogController::class, 'show']);
+     
       
         // Route::group(['prefix' => '/invoice'], function () {
         //     Route::get('show', [OrderInvoiceController::class, 'show']);
@@ -97,10 +101,18 @@ Route::group(['prefix' => '/v1'], function () {
             Route::get('show', [LocationStoreController::class, 'show']);
             
         });
+
         Route::group(['prefix' => '/province'], function () {
 
             Route::get('show', [LocationStoreController::class, 'province']);
             
+        });
+
+        Route::group(['prefix' => '/blog-category'], function () {
+            Route::get('show', [BlogCategoryController::class, 'show']);
+            Route::post('create', [BlogCategoryController::class, 'create']);
+            Route::post('update', [BlogCategoryController::class, 'update']);
+            Route::delete('destroy', [BlogCategoryController::class, 'delete']);
         });
     });
 
@@ -123,8 +135,7 @@ Route::group(['prefix' => '/v1'], function () {
             Route::post('update', [LocationStoreController::class, 'update']);
             Route::post('create', [LocationStoreController::class, 'create']);
             Route::delete('destroy', [LocationStoreController::class, 'delete']);
-         
-            
+        
         });
 
         Route::group(['middleware' => ['verified']], function () {

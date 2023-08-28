@@ -28,7 +28,8 @@ class DatabaseSeeder extends Seeder
             Taxo_typeSeeder::class,
             UsersSeeder::class,
             User_appsSeeder::class,
-            TaxonomySeeder::class
+            TaxonomySeeder::class,
+            CategoryBlogSeeder::class
          
           
         ]);

@@ -20,10 +20,9 @@ class BlogController extends BaseController
 
        
     }
-    public function create(CreateBlogRequest $request) { //done
+    public function create(CreateBlogRequest $request) { 
 
         $insert = $this->blogInterface->store($request->all(),'show_all');
-
           
         if($insert['queryStatus']) {
 

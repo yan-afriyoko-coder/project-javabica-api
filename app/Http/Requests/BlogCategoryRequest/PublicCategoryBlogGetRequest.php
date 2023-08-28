@@ -4,7 +4,7 @@ namespace App\Http\Requests\BlogCategoryRequest;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class PublicBlogCategoryGetRequest extends FormRequest
+class PublicCategoryBlogGetRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,44 +24,33 @@ class PublicBlogCategoryGetRequest extends FormRequest
     public function rules()
     {
         return [
-            'keyword'         =>   [
+            'search'         => [
                 'nullable',
             ],
-            'sort_by'          =>   [
-                'nullable',
-                'in:name,slug'
-            ],
-            'sort_type'       =>   [
+            'sort_type'      => [
                 'nullable',
                 'in:asc,desc',
             ],
-            'paginate'       =>   [
+            'paginate'       => [
                 'nullable',
                 'boolean',
                 'required_with:page,per_page',
             ],
-            'per_page'        =>   [
+            'per_page'       => [
                 'nullable',
                 'numeric',
                 'required_with:paginate',
-                ' required_if:paginate,1,true'
+                'required_if:paginate,1,true'
             ],
-            'page'           =>   [
+            'page'           => [
                 'nullable',
                 'numeric',
                 'required_with:paginate,per_page',
-                ' required_if:paginate,1,true'
-
+                'required_if:paginate,1,true'
             ],
-            'by_id'           =>   [
+            'status'         => [
                 'nullable',
-                'numeric',
-                'exists:blogs,id'
-            ],
-            'by_collection_id'           =>   [
-                'nullable',
-                'numeric',
-             
+                'boolean',
             ],
         ];
     }
