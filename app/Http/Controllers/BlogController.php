@@ -26,7 +26,7 @@ class BlogController extends BaseController
         
         if($getBlog['queryStatus']) {
             
-            return $this->handleResponse( $getBlog['queryResponse'],'get Blog  success',$request->all(),str_replace('/','.',$request->path()),201);
+            return $this->handleResponse( $getBlog['queryResponse'],'get Blog success',$request->all(),str_replace('/','.',$request->path()),201);
         }
 
         $data  = array([
@@ -81,7 +81,7 @@ class BlogController extends BaseController
 
         if($destroy['queryStatus']) {
 
-            return $this->handleResponse( $destroy['queryResponse'],'Delete blog success',$request->all(),str_replace('/','.',$request->path()),201);
+            return $this->handleResponse( $destroy['queryResponse'],'delete blog success',$request->all(),str_replace('/','.',$request->path()),201);
         }
         else {
 
