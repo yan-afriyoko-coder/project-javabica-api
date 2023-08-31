@@ -3,6 +3,8 @@
 namespace App\Http\Requests\BlogCategoryRequest;
 
 use Illuminate\Foundation\Http\FormRequest;
+use App\Models\CategoryBlog;
+use  Illuminate\Validation\ValidationException;
 
 class DestroyCategoryBlogRequest extends FormRequest
 {
@@ -23,9 +25,30 @@ class DestroyCategoryBlogRequest extends FormRequest
      */
     public function rules()
     {
-
         return [
-            'id'          => 'required|exists:category_blogs,id', 
+            'by_id'                        =>   'required|exists:category_blogs,id',
+            'category_name'                =>   'required'
         ];
+    }
+    public function messages()
+    {
+        return [
+
+            'by_id.required'               => 'kategori id perlu diisi',
+            'by_id.exists'                 => 'kategori id tidak tersedia',
+
+        ]; 
+    }
+    protected function passedValidation() {
+
+        //check if id registered as parent
+
+        $checkdata =  CategoryBlog::where('id',$this->by_id)->where('name',$this->category_name)->first();
+
+        if(!$checkdata) {
+            throw ValidationException::withMessages([
+                'title' => ['destory fail,category name not match'],
+            ]);
+        }
     }
 }

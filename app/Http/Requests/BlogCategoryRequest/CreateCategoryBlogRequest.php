@@ -25,7 +25,7 @@ class CreateCategoryBlogRequest extends FormRequest
     {
         return  [
             'name'        => 'required',
-            'slug'        => 'required|unique:category_blogs,slug',
+            'slug'        => 'nullable|unique:category_blogs,slug',
             'description' => 'nullable',
             'status'      => 'required|boolean',
         ];

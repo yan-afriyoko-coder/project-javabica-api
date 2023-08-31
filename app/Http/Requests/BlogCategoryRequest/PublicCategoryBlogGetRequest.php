@@ -24,7 +24,7 @@ class PublicCategoryBlogGetRequest extends FormRequest
     public function rules()
     {
         return [
-            'search'         => [
+            'keyword'         => [
                 'nullable',
             ],
             'sort_type'      => [

@@ -26,7 +26,7 @@ class UpdateCategoryBlogRequest extends FormRequest
 
         return [
             'name'        => 'required',
-            'slug'        => 'required|unique:category_blogs,slug,' . $this->id,
+            'slug'        => 'nullable|unique:category_blogs,slug,' . $this->id,
             'description' => 'nullable',
             'status'      => 'required|boolean',
             'id'          => 'required|exists:category_blogs,id', 

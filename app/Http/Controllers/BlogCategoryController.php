@@ -84,7 +84,7 @@ class BlogCategoryController extends BaseController
     public function delete(DestroyCategoryBlogRequest $request) { //done
         
         //remove data
-        $destroy =   $this->blogCategoryInterface->destroy($request->id);
+        $destroy =   $this->blogCategoryInterface->destroy($request->by_id);
 
 
         if($destroy['queryStatus']) {
@@ -95,7 +95,7 @@ class BlogCategoryController extends BaseController
 
             $data  = array([
                 'field' =>'destroy-blog-category',
-                'message'=> 'blog create fail'
+                'message'=> 'blog category create fail'
             ]);
 
             return   $this->handleError($data,$destroy['queryMessage'],$request->all(),str_replace('/','.',$request->path()),422);

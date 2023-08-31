@@ -9,10 +9,10 @@ class GetByWord
 
   public function handle($query, Closure $next)
   {
-    if (request()->has('search') )
+    if (request()->has('keyword') )
     {
       
-        $keyword = request()->get('search');
+        $keyword = request()->get('keyword');
 
         if($keyword) {
           
