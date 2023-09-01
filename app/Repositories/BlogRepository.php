@@ -165,7 +165,26 @@ class BlogRepository extends BaseController implements BlogInterface
       
 
     }
-    public function destroy($id) {}
+    public function destroy($id) {
+
+        try {
+            $remove =  Blog::where('id',$id)->delete();
+
+            if($remove == true)
+            {
+                return $this->handleQueryArrayResponse($remove,'destroy blog success');
+            }
+            else
+            {
+                return $this->handleQueryErrorArrayResponse($remove,'destroy blog fail');
+            }
+
+        } 
+        catch (\Exception $e) {
+            return $this->handleQueryErrorArrayResponse($e->getMessage(),'error when destory blog');
+        }
+    }
+
     private  function resourceFormat($returnCollection,$data) {
 
         if($returnCollection == 'show_all') //faq service & experience

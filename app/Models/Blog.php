@@ -15,7 +15,9 @@ class Blog extends Model
         'short_desc',
         'long_desc',
         'fk_category',
-        'slug'
+        'slug',
+        'status',
+        'hot_news'
     ];
 
     protected $with = [

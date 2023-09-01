@@ -22,7 +22,7 @@ class BlogShowAllResource extends JsonResource
             'title'                => $this->resource['data']->title,
             'short_desc'           => $this->resource['data']->short_desc,
             'long_desc'            => $this->resource['data']->long_desc,
-            'embed_map'            => $this->resource['data']->embed_map,
+            'status'               => $this->resource['data']->status,
             'slug'                 => $this->resource['data']->slug,
             'created_at'           => $this->resource['data']->created_at,
             'hot_news'             => $this->resource['data']->hot_news,

@@ -24,12 +24,11 @@ class UpdateBlogRequest extends FormRequest
     public function rules()
     {
         return  [
-            'cover'             =>   'required',
             'title'             =>   'required',
-            'short_desc'        =>   'required',  
-            'long_desc'         =>   'required',
-            'fk_category'       =>   'required||exists:category_blogs,id',
-            'id'                =>   'required',
+            'fk_category'       =>   'nullable||exists:category_blogs,id',
+            'status'            =>   'required',
+            'id'                =>   'required|exists:blogs,id',
+            'hot_news'          =>   'required',
             
         ];
     }

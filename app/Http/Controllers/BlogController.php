@@ -76,8 +76,7 @@ class BlogController extends BaseController
     }
 
     public function delete(DestroyBlogRequest $request) {
-
-        $destroy =   $this->blogInterface->destroy($request->id);
+        $destroy =   $this->blogInterface->destroy($request->by_id);
 
         if($destroy['queryStatus']) {
 

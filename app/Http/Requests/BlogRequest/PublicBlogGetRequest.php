@@ -24,7 +24,7 @@ class PublicBlogGetRequest extends FormRequest
     public function rules()
     {
         return [
-            'search'         =>   [
+            'keyword'         =>   [
                 'nullable',
             ],
             'sort_type'       =>   [
@@ -46,17 +46,20 @@ class PublicBlogGetRequest extends FormRequest
                 'nullable',
                 'numeric',
                 'required_with:paginate,per_page',
-                ' required_if:paginate,1,true'
+                'required_if:paginate,1,true'
 
             ],
             'category_id'      =>   [
                 'nullable',
                 'string',
-            
             ],
             'hot_news'      =>   [
                 'nullable',
                 'string',
+            ],
+            'status'         => [
+                'nullable',
+                'boolean',
             ],
 
             

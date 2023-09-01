@@ -26,28 +26,27 @@ class DestroyCategoryBlogRequest extends FormRequest
     public function rules()
     {
         return [
-            'by_id'                        =>   'required|exists:category_blogs,id',
-            'category_name'                =>   'required'
+            'by_id'               =>   'required|exists:category_blogs,id',
+            'name'                =>   'required'
         ];
     }
     public function messages()
     {
         return [
 
-            'by_id.required'               => 'kategori id perlu diisi',
-            'by_id.exists'                 => 'kategori id tidak tersedia',
+            'by_id.required'      => 'kategori id perlu diisi',
+            'by_id.exists'        => 'kategori id tidak tersedia',
 
         ]; 
     }
     protected function passedValidation() {
 
         //check if id registered as parent
-
-        $checkdata =  CategoryBlog::where('id',$this->by_id)->where('name',$this->category_name)->first();
+        $checkdata =  CategoryBlog::where('id',$this->by_id)->where('name',$this->name)->first();
 
         if(!$checkdata) {
             throw ValidationException::withMessages([
-                'title' => ['destory fail,category name not match'],
+                'name' => ['destory fail,category name not match'],
             ]);
         }
     }
