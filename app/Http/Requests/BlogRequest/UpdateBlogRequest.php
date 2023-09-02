@@ -24,6 +24,7 @@ class UpdateBlogRequest extends FormRequest
     public function rules()
     {
         return  [
+            'cover'             =>   'nullable',  
             'title'             =>   'required',
             'fk_category'       =>   'nullable||exists:category_blogs,id',
             'status'            =>   'required',

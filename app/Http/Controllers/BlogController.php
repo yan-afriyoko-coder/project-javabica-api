@@ -7,15 +7,20 @@ use App\Http\Requests\BlogRequest\DestroyBlogRequest;
 use App\Http\Requests\BlogRequest\CreateBlogRequest;
 use App\Http\Requests\BlogRequest\UpdateBlogRequest;
 use App\Interfaces\BlogInterface;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\ValidationException;
+use App\Services\S3uploaderServices;
 
 class BlogController extends BaseController
 {
     private $blogInterface;
+    private $s3uploaderService;
 
     
-    public function __construct(BlogInterface $blogInterface)
+    public function __construct(BlogInterface $blogInterface,S3uploaderServices $s3uploaderService)
     {
         $this->blogInterface            = $blogInterface;
+        $this->s3uploaderService            = $s3uploaderService;
     
     }
     public function show(GetBlogRequestValidation $request) {
@@ -38,6 +43,23 @@ class BlogController extends BaseController
     }
     public function create(CreateBlogRequest $request) { 
 
+        if( $request->file('cover_upload') &&  $request->file('cover_upload') != null) {
+            $this->uploaderValidation($request);
+            
+
+            $fileData = $this->s3uploaderService->uploads3Storage($request->file('cover_upload'),'dynamic');
+
+            $request->merge([
+                'cover' => $fileData['arrayResponse']['filePath']
+            ]);
+
+        }
+        else {
+            $request->merge([
+                'cover' =>$request->cover_upload
+            ]);
+        }
+
         $insert = $this->blogInterface->store($request->all(),'show_all');
 
         if($insert['queryStatus']) {
@@ -57,6 +79,27 @@ class BlogController extends BaseController
     }
     public function update(UpdateBlogRequest $request) { //done
         
+        if( $request->file('cover_upload')&&  $request->file('cover_upload')  != null) {
+            
+            $this->uploaderValidation($request);
+
+            $datas = Blog::find($request->id);
+            $getimage = $datas->cover;
+            
+            $fileData = $this->s3uploaderService->uploads3Storage($request->file('cover_upload'),'dynamic',$getimage);
+
+            $request->merge([
+                'cover' => $fileData['arrayResponse']['filePath']
+            ]);
+
+            
+        } else {
+
+            $request->merge([
+                'cover' =>$request->cover_upload
+            ]);
+        }
+
         $update = $this->blogInterface->update($request->id,$request->except(['id']),'show_all');
 
         if($update['queryStatus']) {
@@ -90,6 +133,17 @@ class BlogController extends BaseController
             ]);
 
             return   $this->handleError($data,$destroy['queryMessage'],$request->all(),str_replace('/','.',$request->path()),422);
+        }
+    }
+
+    private function uploaderValidation($request) {
+        $validator = Validator::make($request->only(['cover']), [
+            'cover' =>  config('formValidation.image_upload'),       
+        ]);
+
+        if ($validator->fails()) { 
+         
+            throw ValidationException::withMessages( $validator->errors()->all());
         }
     }
 
