@@ -29,6 +29,8 @@ use App\Http\Controllers\UsersController;
 use App\Http\Controllers\Publics\ShowPublicBlogsController;
 use App\Http\Controllers\Publics\ShowPublicCategoryBlogController;
 use App\Http\Controllers\BlogCategoryController;
+use App\Http\Controllers\MachineController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -115,6 +117,13 @@ Route::group(['prefix' => '/v1'], function () {
             Route::post('create', [BlogController::class, 'create']);
             Route::post('update', [BlogController::class, 'update']);
             Route::delete('destroy', [BlogController::class, 'delete']);
+        });
+
+        Route::group(['prefix' => '/machine'], function () {
+            Route::get('show', [MachineController::class, 'show']);
+            Route::post('create', [MachineController::class, 'create']);
+            Route::post('update', [MachineController::class, 'update']);
+            Route::delete('destroy', [MachineController::class, 'delete']);
         });
     });
     
