@@ -26,6 +26,7 @@ class UpdateMachineRequest extends FormRequest
 
         return [
             'user_id'           => 'required',
+            'product_id'        => 'required',
             'category_machine'  => 'nullable',
             'purchase_date'     => 'nullable',
             'description'       => 'nullable',

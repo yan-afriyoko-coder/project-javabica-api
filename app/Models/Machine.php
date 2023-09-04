@@ -11,6 +11,7 @@ class Machine extends Model
     
     protected $fillable = [
         'user_id',
+        'product_id',
         'category_machine',
         'purchase_date',
         'description',

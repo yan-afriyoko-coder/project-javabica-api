@@ -16,6 +16,7 @@ class CreateMachinesTable extends Migration
         Schema::create('machines', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('user_id')->nullable();
+            $table->bigInteger('product_id')->nullable();
             $table->text('category_machine')->nullable();
             $table->dateTime('purchase_date')->nullable();
             $table->text('description')->nullable();
