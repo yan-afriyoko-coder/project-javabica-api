@@ -15,8 +15,31 @@ class GetMachineRequestValidation extends FormRequest
      */
     public function authorize()
     {
-      return true;
+        if(Auth::user()->hasRole('super_admin')) 
+        {
+            return true;
+        }
 
+        if (Auth::user()->can('order_show')) {
+            return true;
+        }
+
+        if ($this->by_email == Auth::user()->email) {
+            return true;
+        }
+        
+        if ($this->by_id) {
+        
+            $getMachine = Machine::find($this->by_id);
+        
+            if($getMachine) {
+
+                if($getMachine->user_id == Auth::user()->id)
+                {
+                    return true;
+                }                
+            }
+        }
     }
 
     /**
@@ -31,34 +54,34 @@ class GetMachineRequestValidation extends FormRequest
         return [
             'keyword'         =>   [
                 'nullable',
-             ],
-             'sort_type'      => [
-               'nullable',
-               'in:asc,desc',
+            ],
+            'sort_type'      => [
+            'nullable',
+            'in:asc,desc',
             ],
             'paginate'       =>   [
                 'nullable',
                 'boolean',
                 'required_with:page,per_page',
-             ],
+            ],
             'per_page'        =>   [
                 'nullable',
                 'numeric',
                 'required_with:paginate',
                 ' required_if:paginate,1,true'
-             ],
+            ],
             'page'           =>   [
                 'nullable',
                 'numeric',
                 'required_with:paginate,per_page',
-                ' required_if:paginate,1,true'
-               
-             ],
+                'required_if:paginate,1,true'
+            
+            ],
             'by_id'           =>   [
                 'nullable',
                 'numeric',
                 'exists:machines,id'
-             ],
+            ],
         ];
     }
 }

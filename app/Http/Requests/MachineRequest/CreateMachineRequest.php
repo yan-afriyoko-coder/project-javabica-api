@@ -3,6 +3,7 @@
 namespace App\Http\Requests\MachineRequest;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class CreateMachineRequest extends FormRequest
 {
@@ -13,7 +14,19 @@ class CreateMachineRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        if(Auth::user()->hasRole('super_admin')) 
+        {
+            return true;
+        }
+        
+        if (Auth::user()->can('order_create')) {
+            
+            return true;
+        }
+        
+        if ($this->by_email == Auth::user()->email) {
+            return true;
+        }
     }
 
     /**
@@ -24,9 +37,8 @@ class CreateMachineRequest extends FormRequest
     public function rules()
     {
         return  [
-            'user_id'           => 'required',
             'product_id'        => 'required',
-            'category_machine'  => 'nullable',
+            'category_machine'  => 'required',
             'purchase_date'     => 'nullable',
             'description'       => 'nullable',
         ];

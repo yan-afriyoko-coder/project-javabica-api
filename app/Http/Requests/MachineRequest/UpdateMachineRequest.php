@@ -3,6 +3,7 @@
 namespace App\Http\Requests\MachineRequest;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class UpdateMachineRequest extends FormRequest
 {
@@ -13,7 +14,31 @@ class UpdateMachineRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        if(Auth::user()->hasRole('super_admin')) 
+        {
+            return true;
+        }
+        
+        if (Auth::user()->can('order_update')) {
+            return true;
+        }
+        
+        if ($this->by_email == Auth::user()->email) {
+            return true;
+        }
+        
+        if ($this->by_id) {
+        
+            $getMachine = Machine::find($this->by_id);
+        
+            if($getMachine) {
+
+                if($getMachine->user_id == Auth::user()->id)
+                {
+                    return true;
+                }                
+            }
+        }
     }
 
     /**
@@ -25,9 +50,8 @@ class UpdateMachineRequest extends FormRequest
     {
 
         return [
-            'user_id'           => 'required',
             'product_id'        => 'required',
-            'category_machine'  => 'nullable',
+            'category_machine'  => 'required',
             'purchase_date'     => 'nullable',
             'description'       => 'nullable',
             'id'                => 'required|exists:machines,id', 

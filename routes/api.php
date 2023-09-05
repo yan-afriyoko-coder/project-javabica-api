@@ -119,12 +119,6 @@ Route::group(['prefix' => '/v1'], function () {
             Route::delete('destroy', [BlogController::class, 'delete']);
         });
 
-        Route::group(['prefix' => '/machine'], function () {
-            Route::get('show', [MachineController::class, 'show']);
-            Route::post('create', [MachineController::class, 'create']);
-            Route::post('update', [MachineController::class, 'update']);
-            Route::delete('destroy', [MachineController::class, 'delete']);
-        });
     });
     
 
@@ -234,6 +228,13 @@ Route::group(['prefix' => '/v1'], function () {
                 Route::group(['prefix' => '/order-delivery'], function () {
                     Route::get('show', [OrderDeliveryController::class, 'show']);
                 });
+            });
+            
+            Route::group(['prefix' => '/machine'], function () {
+                Route::get('show', [MachineController::class, 'show']);
+                Route::post('create', [MachineController::class, 'create']);
+                Route::post('update', [MachineController::class, 'update']);
+                Route::delete('destroy', [MachineController::class, 'delete']);
             });
 
             Route::group(['prefix' => '/checkout'], function () {

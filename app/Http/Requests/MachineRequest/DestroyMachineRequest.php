@@ -4,7 +4,8 @@ namespace App\Http\Requests\MachineRequest;
 
 use Illuminate\Foundation\Http\FormRequest;
 use App\Models\Machine;
-use  Illuminate\Validation\ValidationException;
+use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Facades\Auth;
 
 class DestroyMachineRequest extends FormRequest
 {
@@ -15,7 +16,31 @@ class DestroyMachineRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        if(Auth::user()->hasRole('super_admin')) 
+        {
+            return true;
+        }
+        
+        if (Auth::user()->can('order_destroy')) {
+            return true;
+        }
+
+        if ($this->by_email == Auth::user()->email) {
+            return true;
+        }
+        
+        if ($this->by_id) {
+        
+            $getMachine = Machine::find($this->by_id);
+        
+            if($getMachine) {
+
+                if($getMachine->user_id == Auth::user()->id)
+                {
+                    return true;
+                }                
+            }
+        }
     }
 
     /**
@@ -37,16 +62,5 @@ class DestroyMachineRequest extends FormRequest
             'by_id.exists'        => 'machine id tidak tersedia',
 
         ]; 
-    }
-    protected function passedValidation() {
-
-        //check if id registered as parent
-        $checkdata =  Machine::where('id',$this->by_id)->first();
-
-        if(!$checkdata) {
-            throw ValidationException::withMessages([
-                'id' => ['destory fail,id not match'],
-            ]);
-        }
     }
 }
