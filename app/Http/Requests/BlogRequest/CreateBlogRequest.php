@@ -26,7 +26,7 @@ class CreateBlogRequest extends FormRequest
         return  [
             'cover'             =>   'nullable',  
             'title'             =>   'required',
-            'fk_category'       =>   'nullable||exists:category_blogs,id',
+            'fk_category'       =>   'required',
             'status'            =>   'required',
             'hot_news'          =>   'required',
             
