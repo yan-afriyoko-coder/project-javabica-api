@@ -16,6 +16,11 @@ class Machine extends Model
         'purchase_date',
         'description',
     ];
+
+    protected $with = [
+        'user',
+        'product',
+    ];
     
     public function user()
     {
