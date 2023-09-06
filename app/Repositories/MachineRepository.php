@@ -5,6 +5,7 @@ use App\Http\Controllers\BaseController;
 use App\Http\Resources\MachineResource\MachineShowAllResource;
 use App\Interfaces\MachineInterface;
 use App\Models\Machine;
+use App\Models\User;
 use Illuminate\Pipeline\Pipeline;
 use App\PipelineFilters\MachinePipeline\GetByKey;
 use App\PipelineFilters\MachinePipeline\GetByWord;
@@ -92,8 +93,9 @@ class MachineRepository extends BaseController implements MachineInterface
 
 
     public function store($data,$returnColumn) {
-       
-        try {
+        // try {
+            $user = User::where('email', $data['by_email'])->first();
+            $data['user_id'] = $user->id;
             $create = Machine::create($data);
             
             if($create) {
@@ -106,10 +108,10 @@ class MachineRepository extends BaseController implements MachineInterface
                 return $this->handleQueryErrorArrayResponse($create,'insert machine fail');
             }
       
-        } catch (\Exception $e) {
+        // } catch (\Exception $e) {
         
-            return $this->handleQueryErrorArrayResponse($e->getMessage(),'error when store machine');
-        }
+        //     return $this->handleQueryErrorArrayResponse($e->getMessage(),'error when store machine');
+        // }
      
     }
     public function update($id,$data,$returnColumn) {
