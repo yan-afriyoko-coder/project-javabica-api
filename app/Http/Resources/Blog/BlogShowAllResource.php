@@ -26,6 +26,7 @@ class BlogShowAllResource extends JsonResource
             'slug'                 => $this->resource['data']->slug,
             'created_at'           => $this->resource['data']->created_at,
             'hot_news'             => $this->resource['data']->hot_news,
+            'fk_category'          => $this->resource['data']->fk_category,
             'category'             => $this->resource['data']->category,
         ];
     }
