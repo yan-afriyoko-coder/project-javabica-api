@@ -51,7 +51,7 @@ class UpdateMachineRequest extends FormRequest
 
         return [
             'product_id'        => 'required',
-            'category_machine'  => 'required',
+            'serial_number'     => 'required',
             'purchase_date'     => 'nullable',
             'description'       => 'nullable',
             'id'                => 'required|exists:machines,id', 

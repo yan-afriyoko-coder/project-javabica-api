@@ -17,7 +17,7 @@ class GetByWord
         if($keyword) {
           
           $query->where(function ($query)use ($keyword)  {
-              $query->where('category_machine','like', '%' .$keyword.'%');
+              $query->where('serial_number','like', '%' .$keyword.'%');
           });
           
         }

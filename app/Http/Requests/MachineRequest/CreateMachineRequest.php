@@ -38,7 +38,7 @@ class CreateMachineRequest extends FormRequest
     {
         return  [
             'product_id'        => 'required',
-            'category_machine'  => 'required',
+            'serial_number'     => 'required',
             'purchase_date'     => 'nullable',
             'description'       => 'nullable',
         ];
