@@ -28,6 +28,8 @@ class BlogShowAllResource extends JsonResource
             'hot_news'             => $this->resource['data']->hot_news,
             'fk_category'          => $this->resource['data']->fk_category,
             'category'             => $this->resource['data']->category,
+            'meta_title'           => $this->resource['data']->meta_title,
+            'meta_description'     => $this->resource['data']->meta_description,
         ];
     }
 }

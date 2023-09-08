@@ -15,7 +15,7 @@ class AddMetaOnTableBlog extends Migration
     {
         Schema::table('blogs', function (Blueprint $table) {
             $table->string('meta_title')->nullable()->after('hot_news');
-            $table->string('meta_description')->nullable()->after('meta_title');
+            $table->text('meta_description')->nullable()->after('meta_title');
         });
     }
 

@@ -17,7 +17,9 @@ class Blog extends Model
         'fk_category',
         'slug',
         'status',
-        'hot_news'
+        'hot_news',
+        'meta_title',
+        'meta_description',
     ];
 
     protected $with = [

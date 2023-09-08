@@ -26,11 +26,15 @@ class UpdateBlogRequest extends FormRequest
         return  [
             'cover'             =>   'nullable',  
             'title'             =>   'required',
+            'short_desc'        =>   'required',
+            'long_desc'         =>   'required',
             'fk_category'       =>   'required',
             'status'            =>   'required',
-            'id'                =>   'required|exists:blogs,id',
+            'slug'              =>   'required',
             'hot_news'          =>   'required',
-            
+            'id'                =>   'required|exists:blogs,id',
+            'meta_title'        =>   'required',
+            'meta_description'  =>   'required',            
         ];
     }
 }

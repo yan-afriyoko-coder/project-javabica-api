@@ -26,9 +26,14 @@ class CreateBlogRequest extends FormRequest
         return  [
             'cover'             =>   'required',  
             'title'             =>   'required',
+            'short_desc'        =>   'required',
+            'long_desc'         =>   'required',
             'fk_category'       =>   'required',
             'status'            =>   'required',
+            'slug'              =>   'required',
             'hot_news'          =>   'required',
+            'meta_title'        =>   'required',
+            'meta_description'  =>   'required',
             
         ];
     }
