@@ -7,6 +7,7 @@ use App\Http\Requests\BlogRequest\DestroyBlogRequest;
 use App\Http\Requests\BlogRequest\CreateBlogRequest;
 use App\Http\Requests\BlogRequest\UpdateBlogRequest;
 use App\Interfaces\BlogInterface;
+use App\Models\Blog;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
 use App\Services\S3uploaderServices;
@@ -104,6 +105,11 @@ class BlogController extends BaseController
 
         if($update['queryStatus']) {
 
+            $data  = array(
+                'field' =>'update-blog',
+                'message'=> 'blog successfuly updated'
+            );
+            
             return $this->handleResponse( $update['queryResponse'],'update blog success',$request->all(),str_replace('/','.',$request->path()),201);
         }
         else {
