@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Interfaces\MachineInterface;
 use App\Http\Requests\MachineRequest\GetMachineRequestValidation;
+use App\Http\Requests\MachineRequest\PublicMachineGetRequest;
 use App\Http\Requests\MachineRequest\CreateMachineRequest;
 use App\Http\Requests\MachineRequest\UpdateMachineRequest;
 use App\Http\Requests\MachineRequest\DestroyMachineRequest;
@@ -27,6 +28,25 @@ class MachineController extends BaseController
         if($getMachine['queryStatus']) {
             
             return $this->handleResponse( $getMachine['queryResponse'],'get Machine success',$request->all(),str_replace('/','.',$request->path()),201);
+        }
+
+        $data  = array([
+            'field' =>'show-machine',
+            'message'=> 'error when show Machine'
+        ]);
+
+        return   $this->handleError( $data,$getMachine['queryMessage'],$request->all(),str_replace('/','.',$request->path()),422);
+    }
+    
+    public function show_all_machine(PublicMachineGetRequest $request) {
+
+        $selectedColumn = array('*');
+
+        $getMachine = $this->machineInterface->show($request,$selectedColumn);
+        
+        if($getMachine['queryStatus']) {
+            
+            return $this->handleResponse( $getMachine['queryResponse'],'get All Machine success',$request->all(),str_replace('/','.',$request->path()),201);
         }
 
         $data  = array([

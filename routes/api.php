@@ -235,6 +235,7 @@ Route::group(['prefix' => '/v1'], function () {
                 Route::post('create', [MachineController::class, 'create']);
                 Route::post('update', [MachineController::class, 'update']);
                 Route::delete('destroy', [MachineController::class, 'delete']);
+                Route::get('show-all-machine', [MachineController::class, 'show_all_machine']);
             });
 
             Route::group(['prefix' => '/checkout'], function () {
