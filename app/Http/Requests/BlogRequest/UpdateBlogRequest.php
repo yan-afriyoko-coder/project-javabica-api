@@ -24,7 +24,7 @@ class UpdateBlogRequest extends FormRequest
     public function rules()
     {
         return  [
-            'cover'             =>   'nullable',  
+            'cover_upload'      =>   'nullable',  
             'title'             =>   'required',
             'short_desc'        =>   'required',
             'long_desc'         =>   'required',
