@@ -24,11 +24,12 @@ class LocationStoreCreateRequest extends FormRequest
     public function rules()
     {
         return [
-             
-            'name'                   =>   'nullable',
-            'image'                  =>   'nullable',  
-            'description'            =>   'nullable',
-            'embed_map'              =>   'nullable',  
+            
+            'name'                   =>   'required',
+            'fk_province'            =>   'nullable',
+            'image_upload'           =>   'nullable',
+            'description'            =>   'required',
+            'embed_map'              =>   'nullable',
     
         ];
     }
