@@ -26,7 +26,7 @@ class LocationStoreCreateRequest extends FormRequest
         return [
             
             'name'                   =>   'required',
-            'fk_province'            =>   'nullable',
+            'fk_province'            =>   'required',
             'image_upload'           =>   'nullable',
             'description'            =>   'required',
             'embed_map'              =>   'nullable',
