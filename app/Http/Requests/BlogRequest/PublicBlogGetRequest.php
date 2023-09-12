@@ -55,7 +55,7 @@ class PublicBlogGetRequest extends FormRequest
             ],
             'hot_news'      =>   [
                 'nullable',
-                'string',
+                'boolean',
             ],
             'status'         => [
                 'nullable',

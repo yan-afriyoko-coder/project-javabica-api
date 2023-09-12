@@ -18,6 +18,10 @@ class GetByKey
       {
           $query->where('slug', request()->get('slug'));
       }
+      if (request()->has('hot_news') && request()->get('hot_news') === 'true')
+      {
+          $query->where('hot_news', 1);
+      }
       
     return $next($query);
   }
