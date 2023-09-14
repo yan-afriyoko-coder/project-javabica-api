@@ -12,7 +12,7 @@ class HistoryVoucher extends Model
     protected $fillable = [
         'voucher_id',
         'user_id',
-        'product_id',
+        'order_id',
     ];
 
     public function voucher()
@@ -24,9 +24,9 @@ class HistoryVoucher extends Model
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
     
-    public function product()
+    public function order()
     {
-        return $this->belongsTo(Product::class, 'product_id', 'id');
+        return $this->belongsTo(Order::class, 'order_id', 'id');
     }
 
 }

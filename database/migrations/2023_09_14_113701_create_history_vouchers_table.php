@@ -17,7 +17,7 @@ class CreateHistoryVouchersTable extends Migration
             $table->id();
             $table->bigInteger('voucher_id')->nullable();
             $table->bigInteger('user_id')->nullable();
-            $table->bigInteger('product_id')->nullable();
+            $table->bigInteger('order_id')->nullable();
             $table->timestamps();
         });
     }
