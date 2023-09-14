@@ -6,11 +6,6 @@ use Carbon\Carbon;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Schema;
 
-use App\Interfaces\BlogCategoryInterface;
-use App\Repositories\BlogCategoryRepository;
-use App\Interfaces\MachineInterface;
-use App\Repositories\MachineRepository;
-
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -20,8 +15,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind(BlogCategoryInterface::class, BlogCategoryRepository::class);
-        $this->app->bind(MachineInterface::class, MachineRepository::class);
+        //
     }
 
     /**

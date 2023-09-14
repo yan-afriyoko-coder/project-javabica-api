@@ -17,6 +17,9 @@ use App\Interfaces\RolesInterface;
 use App\Interfaces\ShippingAddressInterface;
 use App\Interfaces\TaxonomyInterface;
 use App\Interfaces\UsersInterface;
+use App\Interfaces\BlogCategoryInterface;
+use App\Interfaces\MachineInterface;
+use App\Interfaces\VoucherInterface;
 use App\Repositories\BlogRepository;
 use App\Repositories\LocationStoreRepository;
 use App\Repositories\OrderProductRepository;
@@ -32,6 +35,9 @@ use App\Repositories\RolesRepository;
 use App\Repositories\ShippingAddressRepository;
 use App\Repositories\TaxonomyRepository;
 use App\Repositories\UsersRepository;
+use App\Repositories\BlogCategoryRepository;
+use App\Repositories\MachineRepository;
+use App\Repositories\VoucherRepository;
 use Illuminate\Support\ServiceProvider;
 
 
@@ -54,7 +60,7 @@ class RepositoriesServicesProvider extends ServiceProvider
      */
     public function boot()
     {
-       
+    
         $this->app->bind(UsersInterface::class,UsersRepository::class);
         $this->app->bind(TaxonomyInterface::class,TaxonomyRepository::class);
         $this->app->bind(RolesInterface::class,RolesRepository::class);
@@ -70,5 +76,8 @@ class RepositoriesServicesProvider extends ServiceProvider
         $this->app->bind(ShippingAddressInterface::class,ShippingAddressRepository::class);
         $this->app->bind(LocationStoreInterface::class,LocationStoreRepository::class);
         $this->app->bind(BlogInterface::class,BlogRepository::class);
+        $this->app->bind(BlogCategoryInterface::class, BlogCategoryRepository::class);
+        $this->app->bind(MachineInterface::class, MachineRepository::class);
+        $this->app->bind(VoucherInterface::class, VoucherRepository::class);
     }
 }

@@ -30,6 +30,7 @@ use App\Http\Controllers\Publics\ShowPublicBlogsController;
 use App\Http\Controllers\Publics\ShowPublicCategoryBlogController;
 use App\Http\Controllers\BlogCategoryController;
 use App\Http\Controllers\MachineController;
+use App\Http\Controllers\VoucherController;
 
 
 /*
@@ -236,6 +237,13 @@ Route::group(['prefix' => '/v1'], function () {
                 Route::post('update', [MachineController::class, 'update']);
                 Route::delete('destroy', [MachineController::class, 'delete']);
                 Route::get('show-all-machine', [MachineController::class, 'show_all_machine']);
+            });
+
+            Route::group(['prefix' => '/voucher'], function () {
+                Route::get('show', [VoucherController::class, 'show']);
+                Route::post('create', [VoucherController::class, 'create']);
+                Route::post('update', [VoucherController::class, 'update']);
+                Route::delete('destroy', [VoucherController::class, 'destroy']);
             });
 
             Route::group(['prefix' => '/checkout'], function () {
