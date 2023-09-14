@@ -2,23 +2,23 @@
 namespace App\Repositories;
 
 use App\Http\Controllers\BaseController;
-use App\Http\Resources\VoucherResource\VoucherShowAllResource;
-use App\Interfaces\VoucherInterface;
-use App\Models\Voucher;
+use App\Http\Resources\HistoryVoucherResource\HistoryVoucherShowAllResource;
+use App\Interfaces\HistoryVoucherInterface;
+use App\Models\HistoryVoucher;
 use Illuminate\Pipeline\Pipeline;
-use App\PipelineFilters\VoucherPipeline\GetByKey;
-use App\PipelineFilters\VoucherPipeline\GetByWord;
-use App\PipelineFilters\VoucherPipeline\UseSort;
+use App\PipelineFilters\HistoryVoucherPipeline\GetByKey;
+use App\PipelineFilters\HistoryVoucherPipeline\GetByWord;
+use App\PipelineFilters\HistoryVoucherPipeline\UseSort;
 use Illuminate\Http\Request;
 
-class VoucherRepository extends BaseController implements VoucherInterface 
+class HistoryVoucherRepository extends BaseController implements HistoryVoucherInterface 
 {
     public function show($request,$getOnlyColumn)
     {
     
-        try {
+        // try {
                 $getData =  app(Pipeline::class)
-                                ->send(Voucher::query())
+                                ->send(HistoryVoucher::query())
                                 ->through([
                                     GetByKey::class,
                                     GetByWord::class,
@@ -82,22 +82,22 @@ class VoucherRepository extends BaseController implements VoucherInterface
 
                 return $this->handleQueryArrayResponse($outputData,$message);
 
-        } catch (\Exception $e) {
+        // } catch (\Exception $e) {
 
-            return $this->handleQueryErrorArrayResponse($e->getMessage(),'error when get voucher');
-        }
+        //     return $this->handleQueryErrorArrayResponse($e->getMessage(),'error when get history voucher');
+        // }
     }
 
 
     public function store($data,$returnColumn) {
     
         try {
-            $create = Voucher::create($data);
+            $create = HistoryVoucher::create($data);
             
             if($create) {
                 
                 $reformatUpdate =  $this->resourceFormat($returnColumn,$create);
-                return $this->handleQueryArrayResponse($reformatUpdate,'insert voucher Success');
+                return $this->handleQueryArrayResponse($reformatUpdate,'insert history voucher Success');
     
             } else {
     
@@ -106,14 +106,14 @@ class VoucherRepository extends BaseController implements VoucherInterface
     
         } catch (\Exception $e) {
         
-            return $this->handleQueryErrorArrayResponse($e->getMessage(),'error when store voucher');
+            return $this->handleQueryErrorArrayResponse($e->getMessage(),'error when store history voucher');
         }
     
     }
     public function update($id,$data,$returnColumn) {
 
         try {
-            $update  =  Voucher::find($id);
+            $update  =  HistoryVoucher::find($id);
 
             if($update) {
 
@@ -121,11 +121,11 @@ class VoucherRepository extends BaseController implements VoucherInterface
             
             $refotmatData =  $this->resourceFormat($returnColumn,$update);
 
-            return $this->handleQueryArrayResponse($refotmatData,'update voucher success');
+            return $this->handleQueryArrayResponse($refotmatData,'update history voucher success');
 
             } else {
 
-                return $this->handleQueryErrorArrayResponse($update,'updates fail - voucher id not found');
+                return $this->handleQueryErrorArrayResponse($update,'updates fail - history voucher id not found');
                 
             }
         } 
@@ -136,7 +136,7 @@ class VoucherRepository extends BaseController implements VoucherInterface
     public function destroy($id) {
 
         try {
-            $remove =  Voucher::where('id',$id)->delete();
+            $remove =  HistoryVoucher::where('id',$id)->delete();
 
             if($remove == true)
             {
@@ -155,7 +155,7 @@ class VoucherRepository extends BaseController implements VoucherInterface
 
     private  function resourceFormat($returnCollection,$data) {
 
-        return new VoucherShowAllResource([
+        return new HistoryVoucherShowAllResource([
             'data' => $data,
             'status' => true
         ]);

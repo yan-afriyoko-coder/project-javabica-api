@@ -31,6 +31,7 @@ use App\Http\Controllers\Publics\ShowPublicCategoryBlogController;
 use App\Http\Controllers\BlogCategoryController;
 use App\Http\Controllers\MachineController;
 use App\Http\Controllers\VoucherController;
+use App\Http\Controllers\HistoryVoucherController;
 
 
 /*
@@ -244,6 +245,10 @@ Route::group(['prefix' => '/v1'], function () {
                 Route::post('create', [VoucherController::class, 'create']);
                 Route::post('update', [VoucherController::class, 'update']);
                 Route::delete('destroy', [VoucherController::class, 'destroy']);
+            });
+
+            Route::group(['prefix' => '/history-voucher'], function () {
+                Route::get('show', [HistoryVoucherController::class, 'show']);
             });
 
             Route::group(['prefix' => '/checkout'], function () {

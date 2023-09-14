@@ -20,6 +20,7 @@ use App\Interfaces\UsersInterface;
 use App\Interfaces\BlogCategoryInterface;
 use App\Interfaces\MachineInterface;
 use App\Interfaces\VoucherInterface;
+use App\Interfaces\HistoryVoucherInterface;
 use App\Repositories\BlogRepository;
 use App\Repositories\LocationStoreRepository;
 use App\Repositories\OrderProductRepository;
@@ -37,7 +38,7 @@ use App\Repositories\TaxonomyRepository;
 use App\Repositories\UsersRepository;
 use App\Repositories\BlogCategoryRepository;
 use App\Repositories\MachineRepository;
-use App\Repositories\VoucherRepository;
+use App\Repositories\HistoryVoucherRepository;
 use Illuminate\Support\ServiceProvider;
 
 
@@ -79,5 +80,6 @@ class RepositoriesServicesProvider extends ServiceProvider
         $this->app->bind(BlogCategoryInterface::class, BlogCategoryRepository::class);
         $this->app->bind(MachineInterface::class, MachineRepository::class);
         $this->app->bind(VoucherInterface::class, VoucherRepository::class);
+        $this->app->bind(HistoryVoucherInterface::class, HistoryVoucherRepository::class);
     }
 }
