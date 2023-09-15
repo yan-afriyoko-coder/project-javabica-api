@@ -38,6 +38,7 @@ use App\Repositories\TaxonomyRepository;
 use App\Repositories\UsersRepository;
 use App\Repositories\BlogCategoryRepository;
 use App\Repositories\MachineRepository;
+use App\Repositories\VoucherRepository;
 use App\Repositories\HistoryVoucherRepository;
 use Illuminate\Support\ServiceProvider;
 
