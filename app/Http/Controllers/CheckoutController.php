@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CheckoutRequest\CheckoutCreateRequest;
 use App\Interfaces\OrderInterface;
 use App\Models\Order;
+use App\Models\HistoryVoucher;
 use App\Models\Order_product;
 use App\Models\User_shipping_address;
 use App\Services\Cart\CheckingCartPerItemWithSummaryGroupingService;
@@ -77,7 +78,6 @@ class CheckoutController extends BaseController
 
     ) 
     {
-        
         if($request->data['billing']['same_as_shipping'] == true)
         {
             $billingId     =  $request->data['shipping']['address_id'];
@@ -90,7 +90,7 @@ class CheckoutController extends BaseController
        $shippingId    =  $request->data['shipping']['address_id'];
        $productOrder  =  $request->data['product'];
        $courier       =  $request->data['courier'];
-       
+       $voucher       =  $request->data['voucher'];
        //checking product stock and price
         
        $checkingdata =  $this->checkingCart($productOrder);
@@ -228,11 +228,20 @@ class CheckoutController extends BaseController
 
             'fk_user_id'                 => Auth::user()->id,
 
+            'fk_voucher_id'              => $voucher,
+
             'payment_status'             =>'UNPAID',
             'status'                     =>'ORDER'
         );
 
         $insert  =  $orderInterface->store($payloadOrder,'show_all');
+
+        if($voucher != NULL){
+            $historyVoucher = new HistoryVoucher();
+            $historyVoucher->voucher_id = $voucher;
+            $historyVoucher->user_id = Auth::user()->id;
+            $historyVoucher->order_id = $insert['queryResponse']['data']['id'];
+        }
         
         if($insert['queryStatus'] != true)
         {
