@@ -19,6 +19,7 @@ class OrderCalculationService extends BaseController
         $getOrderProduct =  Order_product::where('fk_order_id',$orderId)->get();
         $subTotal        =  0;
         $total_qty       =  0;
+        $voucherAmount   =  0;
 
         $getOrder = Order::where('id', $orderId)->first();
         $voucher = Voucher::where('id', $getOrder->fk_voucher_id)->first();
@@ -38,11 +39,13 @@ class OrderCalculationService extends BaseController
         if($voucher != NULL){
             if($voucher->type == 1)
             {
-                $grandTotal      = $shippingPrice+$subTotal - $voucher->amount;
+                $voucherAmount  = $voucher->amount;
+                $grandTotal     = $shippingPrice+$subTotal - $voucher->amount;
             }
             else
             {
-                $grandTotal      = $shippingPrice+$subTotal - (($shippingPrice+$subTotal) * ($voucher->amount / 100));
+                $voucherAmount  = (($shippingPrice+$subTotal) * ($voucher->amount / 100));
+                $grandTotal     = $shippingPrice+$subTotal - (($shippingPrice+$subTotal) * ($voucher->amount / 100));
             }
         }
         else{
@@ -54,6 +57,7 @@ class OrderCalculationService extends BaseController
             'total_item'     => $total_qty,
             'total_product'  => count($getOrderProduct),
             'shipping_total' => $shippingPrice,
+            'discount'       => $voucherAmount,
             'grand_total'    => $grandTotal 
         );
 
