@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Http\Controllers\BaseController;
 use App\Models\Order;
 use App\Models\Order_product;
+use App\Models\Voucher;
 
 /**
  * Class OrderProductCalculationService
@@ -18,12 +19,15 @@ class OrderCalculationService extends BaseController
         $getOrderProduct =  Order_product::where('fk_order_id',$orderId)->get();
         $subTotal        =  0;
         $total_qty       =  0;
-        
+
+        $getOrder = Order::where('id', $orderId)->first();
+        $voucher = Voucher::where('id', $getOrder->fk_voucher_id)->first();
+
         foreach($getOrderProduct as $productOrder)
         {               
-          $getTotal    = $productOrder->purchase_price*$productOrder->qty;
-          $total_qty    = $total_qty+$productOrder->qty;
-          $subTotal    = $subTotal+$getTotal;
+            $getTotal    = $productOrder->purchase_price*$productOrder->qty;
+            $total_qty    = $total_qty+$productOrder->qty;
+            $subTotal    = $subTotal+$getTotal;
         }
 
         //shipping
@@ -31,7 +35,19 @@ class OrderCalculationService extends BaseController
         $shippingPrice   = $getShipping->courier_cost;
 
         //grandTotal
-        $grandTotal      = $shippingPrice+$subTotal;
+        if($voucher != NULL){
+            if($voucher->type == 1)
+            {
+                $grandTotal      = $shippingPrice+$subTotal - $voucher->amount;
+            }
+            else
+            {
+                $grandTotal      = $shippingPrice+$subTotal - (($shippingPrice+$subTotal) * ($voucher->amount / 100));
+            }
+        }
+        else{
+            $grandTotal      = $shippingPrice+$subTotal;
+        }
 
         $calculation =  array(
             'sub_total'      => $subTotal,
