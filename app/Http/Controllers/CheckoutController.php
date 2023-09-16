@@ -241,6 +241,7 @@ class CheckoutController extends BaseController
             $historyVoucher->voucher_id = $voucher;
             $historyVoucher->user_id = Auth::user()->id;
             $historyVoucher->order_id = $insert['queryResponse']['data']['id'];
+            $historyVoucher->save();
         }
         
         if($insert['queryStatus'] != true)
