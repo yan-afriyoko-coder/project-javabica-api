@@ -33,7 +33,7 @@ class VoucherUpdateRequest extends FormRequest
     {
 
         return [
-            'code'          => 'nullable|unique:vouchers,code',
+            'code'          => 'nullable|unique:vouchers,code,'. $this->id,
             'description'   => 'required',
             'type'          => 'required',
             'amount'        => 'required',
