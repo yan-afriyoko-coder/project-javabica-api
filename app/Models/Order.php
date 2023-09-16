@@ -56,7 +56,9 @@ class Order extends Model
         'delivery_order_note',
         
         'fk_user_id', 
-       
+
+        'fk_voucher_id', 
+        
         'payment_status',
         'status', 
  
@@ -65,6 +67,10 @@ class Order extends Model
     public function fk_user()
     {
         return $this->belongsTo(User::class, 'fk_user_id', 'id');
+    }
+    public function fk_voucher()
+    {
+        return $this->belongsTo(Voucher::class, 'fk_voucher_id', 'id');
     }
     public function getLatestQueueNumber_permonth()
     {

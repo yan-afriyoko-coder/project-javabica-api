@@ -21,6 +21,7 @@ use App\Http\Controllers\ProductVariantController;
 use App\Http\Controllers\Publics\ShowPublicCategoryController;
 use App\Http\Controllers\Publics\ShowPublicCollectionController;
 use App\Http\Controllers\Publics\ShowPublicProductController;
+use App\Http\Controllers\Publics\ShowPublicVoucherController;
 use App\Http\Controllers\RolePermissionController;
 use App\Http\Controllers\ShippingAddressController;
 use App\Http\Controllers\ShippingController;
@@ -54,6 +55,7 @@ Route::group(['prefix' => '/v1'], function () {
          
          Route::get('collection/show', [ShowPublicCollectionController::class, 'show']);
          Route::post('cart/create', [CartController::class, 'create']);
+         Route::get('voucher/use', [ShowPublicVoucherController::class, 'show']);
          Route::get('blog/show', [ShowPublicBlogsController::class, 'show']);
          Route::get('blog/hot', [ShowPublicBlogsController::class, 'hot']);
          Route::get('category-blog/show', [ShowPublicCategoryBlogController::class, 'show']);

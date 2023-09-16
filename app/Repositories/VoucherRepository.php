@@ -5,6 +5,7 @@ use App\Http\Controllers\BaseController;
 use App\Http\Resources\VoucherResource\VoucherShowAllResource;
 use App\Interfaces\VoucherInterface;
 use App\Models\Voucher;
+use App\Models\HistoryVoucher;
 use Illuminate\Pipeline\Pipeline;
 use App\PipelineFilters\VoucherPipeline\GetByKey;
 use App\PipelineFilters\VoucherPipeline\GetByWord;
@@ -161,4 +162,29 @@ class VoucherRepository extends BaseController implements VoucherInterface
         ]);
     }
 
+    public function check_voucher($request,$getOnlyColumn)
+    {
+        $voucher =  Voucher::where('code',$request->keyword)->first();
+        if($voucher != null){
+            $historyVoucher =  HistoryVoucher::where('voucher_id', $voucher->id)->count();
+            
+            if($voucher->max_usage != NULL && $historyVoucher > $voucher->max_usage){
+                $message = 'Voucher has reach Max usage';
+                return $this->handleQueryErrorArrayResponse($message);
+            }
+            elseif($voucher->end_date != NULL && $voucher->end_date < now()){
+                $message = 'Voucher has expired';
+                return $this->handleQueryErrorArrayResponse($message);
+            }
+            elseif($voucher){
+                $message = 'Voucher successfully used';
+                return $this->handleQueryArrayResponse($voucher,$message);
+            }
+        }
+        else
+        {
+            $message = 'Voucher with this code not found';
+            return $this->handleQueryErrorArrayResponse($message);
+        }
+    }
 }
