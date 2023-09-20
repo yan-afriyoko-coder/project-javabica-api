@@ -22,6 +22,7 @@ class MachineShowAllResource extends JsonResource
             'purchase_date'    => $this->resource['data']->purchase_date,
             'description'      => $this->resource['data']->description,
             'product'          => $this->resource['data']->product,
+            'image_product'    => $this->resource['data']->product->hasMany_image,
             'user'             => $this->resource['data']->user,
         ];
     }
