@@ -167,9 +167,18 @@ class VoucherRepository extends BaseController implements VoucherInterface
         $voucher =  Voucher::where('code',$request->keyword)->first();
         if($voucher != null){
             $historyVoucher =  HistoryVoucher::where('voucher_id', $voucher->id)->count();
+            $historyUserVoucher =  HistoryVoucher::where('voucher_id', $voucher->id)->where('user_id', auth()->user()->id)->count();
             
-            if($voucher->max_usage != NULL && $historyVoucher > $voucher->max_usage){
-                $message = 'Voucher has reach Max usage';
+            if($voucher->total != NULL && $historyVoucher >= $voucher->total){
+                $message = 'Voucher has reach limit usage';
+                return $this->handleQueryErrorArrayResponse($message);
+            }
+            elseif($voucher->max_usage != NULL && $historyUserVoucher >= $voucher->max_usage){
+                $message = 'You have already used this voucher';
+                return $this->handleQueryErrorArrayResponse($message);
+            }
+            elseif($voucher->min_payment != NULL && $request->total < $voucher->min_payment){
+                $message = 'Total payment does not meet the minimum payment requirements';
                 return $this->handleQueryErrorArrayResponse($message);
             }
             elseif($voucher->start_date != NULL && $voucher->start_date > now()){

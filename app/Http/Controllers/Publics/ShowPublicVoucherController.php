@@ -6,6 +6,7 @@ use App\Http\Controllers\BaseController;
 use App\Http\Requests\VoucherRequest\PublicVoucherGetRequest;
 use App\Interfaces\VoucherInterface;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ShowPublicVoucherController extends BaseController
 {

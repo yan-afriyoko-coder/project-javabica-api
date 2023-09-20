@@ -55,7 +55,6 @@ Route::group(['prefix' => '/v1'], function () {
          
          Route::get('collection/show', [ShowPublicCollectionController::class, 'show']);
          Route::post('cart/create', [CartController::class, 'create']);
-         Route::get('voucher/use', [ShowPublicVoucherController::class, 'show']);
          Route::get('blog/show', [ShowPublicBlogsController::class, 'show']);
          Route::get('blog/hot', [ShowPublicBlogsController::class, 'hot']);
          Route::get('category-blog/show', [ShowPublicCategoryBlogController::class, 'show']);
@@ -130,6 +129,8 @@ Route::group(['prefix' => '/v1'], function () {
 
         Route::post('account-verification-validate', [AuthController::class, 'validateVerificationAccount']);
         Route::post('account-verification-email', [AuthController::class, 'AccountVerificationEmail'])->middleware('throttle:account-email-verification');
+
+        Route::get('voucher/use', [ShowPublicVoucherController::class, 'show']);
 
         Route::group(['prefix' => '/my-profile'], function () {
 
