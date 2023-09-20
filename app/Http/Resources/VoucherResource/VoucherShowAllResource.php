@@ -24,6 +24,7 @@ class VoucherShowAllResource extends JsonResource
             'end_date'      => $this->resource['data']->end_date,
             'max_usage'     => $this->resource['data']->max_usage,
             'is_active'     => $this->resource['data']->is_active,
+            'total_use'     => count($this->resource['data']->history_voucher),
         ];
     }
 }

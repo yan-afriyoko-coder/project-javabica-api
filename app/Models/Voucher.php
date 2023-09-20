@@ -36,4 +36,9 @@ class Voucher extends Model
 
         return $code;
     }
+    
+    public function history_voucher()
+    {
+        return $this->hasMany(HistoryVoucher::class, 'voucher_id', 'id');
+    }
 }
