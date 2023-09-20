@@ -14,9 +14,11 @@ class Voucher extends Model
         'description',
         'type',
         'amount',
+        'min_payment',
         'start_date',
         'end_date',
         'max_usage',
+        'total',
         'is_active',
     ];
 
