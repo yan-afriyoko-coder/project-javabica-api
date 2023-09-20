@@ -172,6 +172,10 @@ class VoucherRepository extends BaseController implements VoucherInterface
                 $message = 'Voucher has reach Max usage';
                 return $this->handleQueryErrorArrayResponse($message);
             }
+            elseif($voucher->start_date != NULL && $voucher->start_date > now()){
+                $message = 'Voucher not open yet';
+                return $this->handleQueryErrorArrayResponse($message);
+            }
             elseif($voucher->end_date != NULL && $voucher->end_date < now()){
                 $message = 'Voucher has expired';
                 return $this->handleQueryErrorArrayResponse($message);

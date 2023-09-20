@@ -40,12 +40,12 @@ class OrderCalculationService extends BaseController
             if($voucher->type == 1)
             {
                 $voucherAmount  = $voucher->amount;
-                $grandTotal     = $shippingPrice+$subTotal - $voucher->amount;
+                $grandTotal     = $shippingPrice+$subTotal - $voucherAmount;
             }
             else
             {
-                $voucherAmount  = (($shippingPrice+$subTotal) * ($voucher->amount / 100));
-                $grandTotal     = $shippingPrice+$subTotal - (($shippingPrice+$subTotal) * ($voucher->amount / 100));
+                $voucherAmount  = (($subTotal) * ($voucher->amount / 100));
+                $grandTotal     = $shippingPrice+$subTotal - $voucherAmount;
             }
         }
         else{
