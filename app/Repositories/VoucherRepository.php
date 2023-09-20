@@ -180,9 +180,13 @@ class VoucherRepository extends BaseController implements VoucherInterface
                 $message = 'Voucher has expired';
                 return $this->handleQueryErrorArrayResponse($message);
             }
-            elseif($voucher){
+            elseif($voucher->is_active == 1){
                 $message = 'Voucher successfully used';
                 return $this->handleQueryArrayResponse($voucher,$message);
+            }
+            else{
+                $message = 'Voucher is not active';
+                return $this->handleQueryErrorArrayResponse($message);
             }
         }
         else
