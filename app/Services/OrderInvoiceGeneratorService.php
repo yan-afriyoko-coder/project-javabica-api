@@ -16,7 +16,6 @@ class OrderInvoiceGeneratorService
 {
     public function generate($dataCollection)
     {
-
         $companyDetail = new Party([
             'coporate_name'        => ''.config('javabica.corporate_name').'',
             'address'              => ''.config('javabica.address').'',
@@ -37,6 +36,7 @@ class OrderInvoiceGeneratorService
 
         $items = [];
      
+        dd('a');
         foreach ($dataCollection->product_order as $cart) {
             $listCart =   (new InvoiceItem())
                 ->title($cart->product_name)
