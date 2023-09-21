@@ -91,7 +91,7 @@ class OrderInvoiceGeneratorService
             $invoice->shipping_amount =  $dataCollection->courier_cost;
             $invoice->companyDetail   =  $companyDetail;
          
-            dd($invoice);
+            dd($invoice->stream());
             // And return invoice itself to browser or have a different view
             return $invoice->stream();
     }
