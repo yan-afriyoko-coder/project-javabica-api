@@ -36,28 +36,28 @@ class OrderCalculationService extends BaseController
         $shippingPrice   = $getShipping->courier_cost;
 
         //grandTotal
-        if($voucher != NULL){
-            if($voucher->type == 1)
-            {
-                $voucherAmount  = $voucher->amount;
-                $grandTotal     = $shippingPrice+$subTotal - $voucherAmount;
-            }
-            else
-            {
-                $voucherAmount  = (($subTotal) * ($voucher->amount / 100));
-                $grandTotal     = $shippingPrice+$subTotal - $voucherAmount;
-            }
-        }
-        else{
+        // if($voucher != NULL){
+        //     if($voucher->type == 1)
+        //     {
+        //         $voucherAmount  = $voucher->amount;
+        //         $grandTotal     = $shippingPrice+$subTotal - $voucherAmount;
+        //     }
+        //     else
+        //     {
+        //         $voucherAmount  = (($subTotal) * ($voucher->amount / 100));
+        //         $grandTotal     = $shippingPrice+$subTotal - $voucherAmount;
+        //     }
+        // }
+        // else{
             $grandTotal      = $shippingPrice+$subTotal;
-        }
+        // }
 
         $calculation =  array(
             'sub_total'      => $subTotal,
             'total_item'     => $total_qty,
             'total_product'  => count($getOrderProduct),
             'shipping_total' => $shippingPrice,
-            'discount'       => $voucherAmount,
+            // 'discount'       => $voucherAmount,
             'grand_total'    => $grandTotal 
         );
 
