@@ -68,7 +68,7 @@ class OrderInvoiceGeneratorService
 
         ];
         $notes = implode("<br>", $notes);
-        dd($notes);
+
         $invoice = Invoice::make('Invoice')
             ->template('invoice')
             ->status($dataCollection->payment_status)
@@ -91,7 +91,7 @@ class OrderInvoiceGeneratorService
             $invoice->shipping_amount =  $dataCollection->courier_cost;
             $invoice->companyDetail   =  $companyDetail;
          
-        
+            dd($invoice);
             // And return invoice itself to browser or have a different view
             return $invoice->stream();
     }
