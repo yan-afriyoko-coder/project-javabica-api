@@ -60,7 +60,7 @@ class OrderInvoiceGeneratorService
 
             array_push($items, $listCart);
         }
-        dd('a');
+
         $notes = [
             '',
             '',
@@ -68,7 +68,7 @@ class OrderInvoiceGeneratorService
 
         ];
         $notes = implode("<br>", $notes);
-
+        dd($notes);
         $invoice = Invoice::make('Invoice')
             ->template('invoice')
             ->status($dataCollection->payment_status)
