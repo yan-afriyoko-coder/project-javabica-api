@@ -36,7 +36,6 @@ class OrderInvoiceGeneratorService
 
         $items = [];
      
-        dd('a');
         foreach ($dataCollection->product_order as $cart) {
             $listCart =   (new InvoiceItem())
                 ->title($cart->product_name)
@@ -61,7 +60,7 @@ class OrderInvoiceGeneratorService
 
             array_push($items, $listCart);
         }
-  
+        dd('a');
         $notes = [
             '',
             '',
