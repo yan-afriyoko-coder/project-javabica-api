@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title></title>
+        <title>{{ $invoice->name }}</title>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 
         <style type="text/css" media="screen">
@@ -139,26 +139,26 @@
     </head>
 
     <body>
-        {{-- @dd($invoice->companyDetail->coporate_name) --}}
+        {{ $invoice->getLogo() }}
         {{-- Header --}}
-        {{-- @if($invoice->logo) --}}
+        {{-- @if($invoice->logo)
           
           
             <table class="table mt-3">
                 <tbody class="border-0">
                     <tr>
                         <td  class="border-0 pl-0" width="20%">
-                            {{-- <img src="{{ $invoice->getLogo() }}" alt="logo" class="p-0" height="40"> --}}
+                            <img src="{{ $invoice->getLogo() }}" alt="logo" class="p-0" height="40">
                         </td>
                         <td class="border-0">
-                            {{-- <p style="font-weight:700;margin-bottom:0px">{{$invoice->companyDetail->coporate_name}}</p>
+                            <p style="font-weight:700;margin-bottom:0px">{{$invoice->companyDetail->coporate_name}}</p>
                             <p style="margin-bottom:1px">{{$invoice->companyDetail->address}}</p>
-                            <p style="margin-bottom:0px">Telp:{{$invoice->companyDetail->phone}} | email:{{$invoice->companyDetail->email}} | website:{{$invoice->companyDetail->website}} </p> --}}
+                            <p style="margin-bottom:0px">Telp:{{$invoice->companyDetail->phone}} | email:{{$invoice->companyDetail->email}} | website:{{$invoice->companyDetail->website}} </p>
                         </td>
                     </tr>
                 </tbody>
             </table>
-        {{-- @endif --}}
+        @endif --}}
 
         {{-- <table class="table mt-3">
             <tbody>
