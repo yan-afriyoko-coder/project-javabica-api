@@ -139,6 +139,17 @@
     </head>
 
     <body>
+        @php
+            $voucherDiscount = 0;
+            if($invoice->voucher){
+                if ($invoice->voucher->type == '1'){
+                    $voucherDiscount = $invoice->voucher->amount;
+                }
+                else {
+                    $voucherDiscount = ($invoice->total_amount - $invoice->shipping_amount) - (($invoice->total_amount - $invoice->shipping_amount) * ($invoice->voucher->amount / 100));
+                }
+            }
+        @endphp
         {{-- Header --}}
         @if($invoice->logo)
           
@@ -335,7 +346,7 @@
                         Terbilang :
                     </td>
                     <td colspan="5" style="border:1px solid #000;" class="px-2 ">
-                        {!!Terbilang::make($invoice->total_amount,' rupiah', 'seniai '); !!}
+                        {!!Terbilang::make($invoice->total_amount - $voucherDiscount ,' rupiah', 'senilai '); !!}
                     </td>
                 </tr>
                 @if($invoice->hasItemOrInvoiceDiscount())
@@ -385,6 +396,25 @@
                         </td>
                     </tr>
                 @endif
+                @if ($invoice->voucher)
+                    @if ($invoice->voucher->type == '1')
+                        <tr>
+                            <td colspan="{{ $invoice->table_columns - 1 }}" class="border-0"></td>
+                            <td class="text-right pl-0" width="20%">{{ __('Voucher') }}</td>
+                            <td class="text-right pr-0">
+                                {{ $invoice->formatCurrency($voucherDiscount) }}
+                            </td>
+                        </tr>
+                    @else
+                        <tr>
+                            <td colspan="{{ $invoice->table_columns - 1 }}" class="border-0"></td>
+                            <td class="text-right pl-0" width="20%">{{ __('Voucher') }}</td>
+                            <td class="text-right pr-0">
+                                {{ $invoice->formatCurrency(($invoice->total_amount - $invoice->shipping_amount) - $voucherDiscount) }}
+                            </td>
+                        </tr>
+                    @endif
+                @endif
                     <tr>
                         <td colspan="{{ $invoice->table_columns - 1 }}" class="border-0">
                         
@@ -392,7 +422,7 @@
                         </td>
                         <td class="text-right pl-0" style="font-weight:700">{{ __('invoices::invoice.total_amount') }}</td>
                         <td class="text-right pr-0 total-amount">
-                            {{ $invoice->formatCurrency($invoice->total_amount) }}
+                            {{ $invoice->formatCurrency($invoice->total_amount - $voucherDiscount) }}
                         </td>
                     </tr>
             </tbody>

@@ -86,6 +86,7 @@ class OrderInvoiceGeneratorService
         
                 $invoice->shipping_amount =  $dataCollection->courier_cost;
                 $invoice->companyDetail   =  $companyDetail;
+                $invoice->voucher         =  $dataCollection->voucher;
             
             // Return PDF
             return $invoice->stream();

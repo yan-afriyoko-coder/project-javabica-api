@@ -82,6 +82,8 @@ class OrderWithProductResource extends JsonResource
             'payment_method'               => $this->resource['data']->payment_method,
             'payment_refrence_code'        => $this->resource['data']->payment_refrence_code,
 
+            'voucher'                      => $this->resource['data']->fk_voucher,
+
             'invoice_note'               => $this->resource['data']->invoice_note,
             'delivery_order_note'        => $this->resource['data']->delivery_order_note,
 
