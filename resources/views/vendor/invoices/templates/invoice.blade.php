@@ -160,7 +160,7 @@
             </table>
         @endif --}}
 
-        {{-- <table class="table mt-3">
+        <table class="table mt-3">
             <tbody>
                 <tr>
                     <td class="border-0 pl-0" width="70%">
@@ -171,7 +171,7 @@
                     </td>
                 </tr>
             </tbody>
-        </table> --}}
+        </table>
 
         {{-- Seller - Buyer --}}
         {{-- <table class="table">
