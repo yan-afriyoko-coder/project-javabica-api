@@ -7,6 +7,7 @@ use LaravelDaily\Invoices\Invoice;
 use LaravelDaily\Invoices\Classes\Buyer;
 use LaravelDaily\Invoices\Classes\InvoiceItem;
 use LaravelDaily\Invoices\Classes\Party;
+// use Barryvdh\Snappy\Facades\SnappyPdf as PDF;
 
 /**
  * Class OrderInvoiceGeneratorService
@@ -24,51 +25,46 @@ class OrderInvoiceGeneratorService
                 'email'         => utf8_encode(config('javabica.email')),
                 'website'       => utf8_encode(config('javabica.website')),
             ]);
-
+            
             $customer = new Party([
                 'name' => utf8_encode($dataCollection->billing_first_name . ' ' . $dataCollection->billing_last_name),
                 'custom_fields' => [
                     'Alamat' => utf8_encode($dataCollection->billing_address . ', ' . $dataCollection->billing_city . ', ' . $dataCollection->billing_province . ', ' . $dataCollection->billing_postal_code . ', ' . $dataCollection->billing_country . '.'),
                     'Telp' => utf8_encode($dataCollection->contact_billing_phone),
-                    // 'email' => $dataCollection->contact_email,
+                    // 'email' => utf8_encode($dataCollection->contact_email),
                 ],
             ]);
-
+            
             $items = [];
-        
+            
             foreach ($dataCollection->product_order as $cart) {
-                $listCart =   (new InvoiceItem())
-                    ->title($cart->product_name)
+                $listCart = (new InvoiceItem())
+                    ->title(utf8_encode($cart->product_name)) // Encode title jika diperlukan
+                    ->description(utf8_encode($cart->variant_description)) // Encode deskripsi jika diperlukan
                     ->quantity($cart->qty);
-                $listCart->description = utf8_encode($cart->variant_description);
-                $listCart->product_code = $cart->sku;
-                $listCart->note         = $cart->note;
-
-    
+                $listCart->product_code = utf8_encode($cart->sku); // Encode product_code jika diperlukan
+                $listCart->note = utf8_encode($cart->note); // Encode note jika diperlukan
+            
                 if ($cart->discount_price != null || $cart->discount_price > 0) {
-
-                    $listCart->sub_total_price = $cart->qty*$cart->discount_price;
-                    $reformat                  =  $cart->qty*($cart->acctual_price-$cart->discount_price);
-                    $listCart                  = $listCart->pricePerUnit($cart->acctual_price);
-                    $listCart                  = $listCart->discount($reformat);
+                    $listCart->sub_total_price = $cart->qty * $cart->discount_price;
+                    $reformat = $cart->qty * ($cart->acctual_price - $cart->discount_price);
+                    $listCart = $listCart->pricePerUnit($cart->acctual_price);
+                    $listCart = $listCart->discount($reformat);
+                } else {
+                    $listCart = $listCart->pricePerUnit($cart->purchase_price);
                 }
-
-                else
-                {
-                    $listCart=$listCart->pricePerUnit($cart->purchase_price);
-                }
-
+            
                 array_push($items, $listCart);
             }
-
+            
             $notes = [
                 '',
                 '',
-                '' . $dataCollection->invoice_note . '',
-
+                utf8_encode($dataCollection->invoice_note), // Encode invoice_note jika diperlukan
             ];
+            
             $notes = implode("<br>", $notes);
-            // dd($dataCollection, $customer, $items, $notes);
+            
             $invoice = Invoice::make('Invoice')
                 ->template('invoice')
                 ->status($dataCollection->payment_status)
@@ -91,9 +87,8 @@ class OrderInvoiceGeneratorService
                 $invoice->shipping_amount =  $dataCollection->courier_cost;
                 $invoice->companyDetail   =  $companyDetail;
             
-                dd($invoice->stream());
-                // And return invoice itself to browser or have a different view
-                return $invoice->stream();
+            // Return PDF
+            return $invoice->stream();
                 
         } catch (\Exception $e) {
             // Tangani error, misalnya dengan mencetak pesan error
