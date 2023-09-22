@@ -118,10 +118,10 @@
                 font-size: 0.8rem;
                 font-weight: 700;
             } */
-            .total-amount {
+            /* .total-amount {
                 font-size: 12px;
                 font-weight: 700;
-            }
+            } */
             /* .border-0 {
                 border: none !important;
             } */
