@@ -139,9 +139,8 @@
     </head>
 
     <body>
-        <img src="{{ $invoice->getLogo() }}" alt="logo" class="p-0" height="40">
         {{-- Header --}}
-        {{-- @if($invoice->logo)
+        @if($invoice->logo)
           
           
             <table class="table mt-3">
@@ -158,9 +157,9 @@
                     </tr>
                 </tbody>
             </table>
-        @endif --}}
+        @endif
 
-        {{-- <table class="table mt-3">
+        <table class="table mt-3">
             <tbody>
                 <tr>
                     <td class="border-0 pl-0" width="70%">
@@ -171,10 +170,10 @@
                     </td>
                 </tr>
             </tbody>
-        </table> --}}
+        </table>
 
         {{-- Seller - Buyer --}}
-        {{-- <table class="table">
+        <table class="table">
             <thead>
                 <tr>
                     <th class="border-top-bottom pl-0 party-header" >
@@ -260,10 +259,10 @@
                     </td>
                 </tr>
             </tbody>
-        </table> --}}
+        </table>
 
         {{-- Table --}}
-        {{-- <table class="table table-items">
+        <table class="table table-items">
             <thead>
                 <tr>
                     <th scope="col" class="border-0 pl-0">Kode</th>
@@ -282,9 +281,9 @@
                     <th scope="col" class="text-right border-0 pr-0">{{ __('invoices::invoice.sub_total') }}</th>
                 </tr>
             </thead>
-            <tbody> --}}
+            <tbody>
                 {{-- Items --}}
-                {{-- @foreach($invoice->items as $item)
+                @foreach($invoice->items as $item)
                 <tr>
                     <td width="20%">
                         {{$item->product_code}}
@@ -325,10 +324,10 @@
                 @endforeach
                 <tr>
                     <td style="border-bottom:1px solid #000;padding-bottom:1rem;padding-top:0.1rem" colspan="6"></td>
-                </tr> --}}
+                </tr>
                
                 {{-- Summary --}}
-                {{-- <tr>
+                <tr>
                     <td style="padding-top:0.2rem" colspan="6"></td>
                 </tr>
                 <tr >
@@ -397,9 +396,9 @@
                         </td>
                     </tr>
             </tbody>
-        </table> --}}
+        </table>
                  
-        {{-- @if($invoice->notes)
+        @if($invoice->notes)
         <table class="table " width="100%">
             <tr  width="80%">
                 <td  class="border-1">
@@ -407,9 +406,9 @@
                 </td>
                 <td width="40%" ></td>
             </tr>
-        </table> --}}
+        </table>
          
-        {{-- @endif --}}
+        @endif
         {{-- @if($invoice->notes)
             <p>
                 {{ trans('invoices::invoice.notes') }}: {!! $invoice->notes !!}
@@ -423,7 +422,7 @@
             {{ trans('invoices::invoice.pay_until') }}: {{ $invoice->getPayUntilDate() }}
         </p> --}}
 
-        {{-- <script type="text/php">
+        <script type="text/php">
             if (isset($pdf) && $PAGE_COUNT > 1) {
                 $text = "Page {PAGE_NUM} / {PAGE_COUNT}";
                 $size = 10;
@@ -433,6 +432,6 @@
                 $y = $pdf->get_height() - 35;
                 $pdf->page_text($x, $y, $text, $font, $size);
             }
-        </script> --}}
+        </script>
     </body>
 </html>
