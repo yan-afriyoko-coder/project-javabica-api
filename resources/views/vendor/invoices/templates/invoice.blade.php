@@ -87,7 +87,7 @@
                 margin-top: 1rem !important;
             }
 
-            /* .pr-0,
+            .pr-0,
             .px-0 {
                 padding-right: 0 !important;
             }
@@ -108,7 +108,7 @@
             .text-uppercase {
                 text-transform: uppercase !important;
             }
-            * {
+            /** {
                 font-family: "DejaVu Sans";
             }
             body, h1, h2, h3, h4, h5, h6, table, th, tr, td, p, div {
