@@ -22,7 +22,7 @@
                 margin: 36pt;
             }
 
-            /* h4 {
+            h4 {
                 margin-top: 0;
                 margin-bottom: 0.5rem;
             }
@@ -59,7 +59,7 @@
                 font-size: 1.5rem;
             }
 
-            .table {
+            /* .table {
                 width: 100%;
                 margin-bottom: 1rem;
                 color: #212529;
