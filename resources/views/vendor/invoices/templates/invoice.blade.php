@@ -59,7 +59,7 @@
                 font-size: 1.5rem;
             }
 
-            /* .table {
+            .table {
                 width: 100%;
                 margin-bottom: 1rem;
                 color: #212529;
@@ -87,7 +87,7 @@
                 margin-top: 1rem !important;
             }
 
-            .pr-0,
+            /* .pr-0,
             .px-0 {
                 padding-right: 0 !important;
             }
