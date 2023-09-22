@@ -4,7 +4,7 @@
         <title>{{ $invoice->name }}</title>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 
-        {{-- <style type="text/css" media="screen">
+        <style type="text/css" media="screen">
             html {
                 font-family: sans-serif;
                 line-height: 1.15;
@@ -22,7 +22,7 @@
                 margin: 36pt;
             }
 
-            h4 {
+            /* h4 {
                 margin-top: 0;
                 margin-bottom: 0.5rem;
             }
@@ -134,8 +134,8 @@
             }
             .cool-gray {
                 color: #6B7280;
-            }
-        </style> --}}
+            } */
+        </style>
     </head>
 
     <body>
