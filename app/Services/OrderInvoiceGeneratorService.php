@@ -18,19 +18,18 @@ class OrderInvoiceGeneratorService
     {
         try {
             $companyDetail = new Party([
-                'coporate_name'        => ''.config('javabica.corporate_name').'',
-                'address'              => ''.config('javabica.address').'',
-                'phone'                => ''.config('javabica.phone').'',
-                'email'                => ''.config('javabica.email').'',
-                'website'              => ''.config('javabica.website').'',
-                
+                'coporate_name' => utf8_encode(config('javabica.corporate_name')),
+                'address'       => utf8_encode(config('javabica.address')),
+                'phone'         => utf8_encode(config('javabica.phone')),
+                'email'         => utf8_encode(config('javabica.email')),
+                'website'       => utf8_encode(config('javabica.website')),
             ]);
 
             $customer = new Party([
-                'name'          => $dataCollection->billing_first_name . ' ' . $dataCollection->billing_last_name,
+                'name' => utf8_encode($dataCollection->billing_first_name . ' ' . $dataCollection->billing_last_name),
                 'custom_fields' => [
-                    'Alamat' => $dataCollection->billing_address . ', ' . $dataCollection->billing_city . ', ' . $dataCollection->billing_province . ', ' . $dataCollection->billing_postal_code . ', ' . $dataCollection->billing_country . '.',
-                    'Telp' => $dataCollection->contact_billing_phone,
+                    'Alamat' => utf8_encode($dataCollection->billing_address . ', ' . $dataCollection->billing_city . ', ' . $dataCollection->billing_province . ', ' . $dataCollection->billing_postal_code . ', ' . $dataCollection->billing_country . '.'),
+                    'Telp' => utf8_encode($dataCollection->contact_billing_phone),
                     // 'email' => $dataCollection->contact_email,
                 ],
             ]);
@@ -40,10 +39,10 @@ class OrderInvoiceGeneratorService
             foreach ($dataCollection->product_order as $cart) {
                 $listCart =   (new InvoiceItem())
                     ->title($cart->product_name)
-                    ->description(''.$cart->variant_description.'')
                     ->quantity($cart->qty);
-                    $listCart->product_code = $cart->sku;
-                    $listCart->note         = $cart->note;
+                $listCart->description = utf8_encode($cart->variant_description);
+                $listCart->product_code = $cart->sku;
+                $listCart->note         = $cart->note;
 
     
                 if ($cart->discount_price != null || $cart->discount_price > 0) {
@@ -69,7 +68,7 @@ class OrderInvoiceGeneratorService
 
             ];
             $notes = implode("<br>", $notes);
-            dd($dataCollection, $customer, $items, $notes);
+            // dd($dataCollection, $customer, $items, $notes);
             $invoice = Invoice::make('Invoice')
                 ->template('invoice')
                 ->status($dataCollection->payment_status)
@@ -92,7 +91,7 @@ class OrderInvoiceGeneratorService
                 $invoice->shipping_amount =  $dataCollection->courier_cost;
                 $invoice->companyDetail   =  $companyDetail;
             
-                // dd($invoice->stream());
+                dd($invoice->stream());
                 // And return invoice itself to browser or have a different view
                 return $invoice->stream();
                 
