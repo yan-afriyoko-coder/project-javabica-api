@@ -118,13 +118,13 @@
                 font-size: 0.8rem;
                 font-weight: 700;
             } */
-            /* .total-amount {
+            .total-amount {
                 font-size: 12px;
                 font-weight: 700;
-            } */
-            .border-0 {
-                border: none !important;
             }
+            /* .border-0 {
+                border: none !important;
+            } */
             /* .border-1 {
                 border: 1px solid #000 !important;
             } */
@@ -132,9 +132,9 @@
                 border-top:1px solid #000;
                 border-bottom:1px solid #000;
             } */
-            /* .cool-gray {
+            .cool-gray {
                 color: #6B7280;
-            } */
+            }
         </style>
     </head>
 
