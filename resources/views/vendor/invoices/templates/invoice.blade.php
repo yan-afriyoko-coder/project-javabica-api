@@ -148,7 +148,7 @@
                 <tbody class="border-0">
                     <tr>
                         <td  class="border-0 pl-0" width="20%">
-                            <img src="{{ $invoice->getLogo() }}" alt="logo" class="p-0" height="40">
+                            {{-- <img src="{{ $invoice->getLogo() }}" alt="logo" class="p-0" height="40"> --}}a
                         </td>
                         <td class="border-0">
                             {{-- <p style="font-weight:700;margin-bottom:0px">{{$invoice->companyDetail->coporate_name}}</p>
