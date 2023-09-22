@@ -7,7 +7,6 @@ use LaravelDaily\Invoices\Invoice;
 use LaravelDaily\Invoices\Classes\Buyer;
 use LaravelDaily\Invoices\Classes\InvoiceItem;
 use LaravelDaily\Invoices\Classes\Party;
-// use Barryvdh\Snappy\Facades\SnappyPdf as PDF;
 
 /**
  * Class OrderInvoiceGeneratorService
@@ -65,6 +64,7 @@ class OrderInvoiceGeneratorService
             
             $notes = implode("<br>", $notes);
             
+            // dd($dataCollection, $customer, $items, $notes);
             $invoice = Invoice::make('Invoice')
                 ->template('invoice')
                 ->status($dataCollection->payment_status)
