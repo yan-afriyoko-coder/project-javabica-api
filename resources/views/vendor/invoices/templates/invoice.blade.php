@@ -141,14 +141,14 @@
     <body>
         
         {{-- Header --}}
-        {{-- @if($invoice->logo) --}}
+        @if($invoice->logo)
           
           
             <table class="table mt-3">
                 <tbody class="border-0">
                     <tr>
                         <td  class="border-0 pl-0" width="20%">
-                            <img src="{{ $invoice->getLogo() }}" alt="logo" class="p-0" height="40">
+                            {{-- <img src="{{ $invoice->getLogo() }}" alt="logo" class="p-0" height="40"> --}}
                         </td>
                         <td class="border-0">
                             {{-- <p style="font-weight:700;margin-bottom:0px">{{$invoice->companyDetail->coporate_name}}</p>
@@ -158,7 +158,7 @@
                     </tr>
                 </tbody>
             </table>
-        {{-- @endif --}}
+        @endif
 
         {{-- <table class="table mt-3">
             <tbody>
