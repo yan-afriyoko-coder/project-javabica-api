@@ -132,9 +132,9 @@
                 border-top:1px solid #000;
                 border-bottom:1px solid #000;
             } */
-            .cool-gray {
+            /* .cool-gray {
                 color: #6B7280;
-            }
+            } */
         </style>
     </head>
 
