@@ -139,9 +139,9 @@
     </head>
 
     <body>
-        
+        @dd($invoice->companyDetail->coporate_name)
         {{-- Header --}}
-        @if($invoice->logo)
+        @if($invoice->logo !== NULL)
           
           
             <table class="table mt-3">
