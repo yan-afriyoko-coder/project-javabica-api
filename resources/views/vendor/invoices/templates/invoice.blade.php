@@ -139,7 +139,7 @@
     </head>
 
     <body>
-        <img src="{{ $invoice->getLogo() }}">
+        <img src="{{ $invoice->getLogo() }}" alt="logo" class="p-0" height="40">
         {{-- Header --}}
         {{-- @if($invoice->logo)
           
