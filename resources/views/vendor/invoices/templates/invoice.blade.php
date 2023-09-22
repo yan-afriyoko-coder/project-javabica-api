@@ -139,7 +139,8 @@
     </head>
 
     <body>
-        @dd($invoice->name)
+        {{-- @dd($invoice->name) --}}
+        {{ $invoice->name }}
         {{-- Header --}}
         {{-- @if($invoice->logo)
           
