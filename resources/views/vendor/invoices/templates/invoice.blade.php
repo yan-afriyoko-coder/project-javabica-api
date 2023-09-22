@@ -4,7 +4,7 @@
         <title>{{ $invoice->name }}</title>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 
-        <style type="text/css" media="screen">
+        {{-- <style type="text/css" media="screen">
             html {
                 font-family: sans-serif;
                 line-height: 1.15;
@@ -135,11 +135,11 @@
             .cool-gray {
                 color: #6B7280;
             }
-        </style>
+        </style> --}}
     </head>
 
     <body>
-        <img src="{{ $invoice->getLogo() }}" alt="logo" class="p-0" height="40">
+        <img src="{{ $invoice->getLogo() }}">
         {{-- Header --}}
         {{-- @if($invoice->logo)
           
