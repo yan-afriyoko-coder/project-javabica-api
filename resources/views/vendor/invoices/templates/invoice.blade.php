@@ -125,13 +125,13 @@
             .border-0 {
                 border: none !important;
             }
-            .border-1 {
+            /* .border-1 {
                 border: 1px solid #000 !important;
-            }
-            .border-top-bottom {
+            } */
+            /* .border-top-bottom {
                 border-top:1px solid #000;
                 border-bottom:1px solid #000;
-            }
+            } */
             /* .cool-gray {
                 color: #6B7280;
             } */
