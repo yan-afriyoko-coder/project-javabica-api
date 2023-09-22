@@ -141,7 +141,7 @@
     <body>
         {{-- @dd($invoice->companyDetail->coporate_name) --}}
         {{-- Header --}}
-        @if($invoice->logo !== NULL)
+        {{-- @if($invoice->logo) --}}
           
           
             <table class="table mt-3">
@@ -158,7 +158,7 @@
                     </tr>
                 </tbody>
             </table>
-        @endif
+        {{-- @endif --}}
 
         {{-- <table class="table mt-3">
             <tbody>
