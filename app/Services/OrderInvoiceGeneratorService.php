@@ -74,15 +74,15 @@ class OrderInvoiceGeneratorService
             ->status($dataCollection->payment_status)
             ->serialNumberFormat($dataCollection->order_number)
             ->buyer($customer)
-            ->date(Carbon::parse($dataCollection->created_at))
-            ->dateFormat('d/m/Y')
-            ->currencySymbol('Rp')
-            ->currencyFormat('{SYMBOL}{VALUE}')
-            ->currencyThousandsSeparator('.')
-            ->currencyDecimalPoint(',')
-            ->filename($customer->name.'_'.$dataCollection->order_number)
+            // ->date(Carbon::parse($dataCollection->created_at))
+            // ->dateFormat('d/m/Y')
+            // ->currencySymbol('Rp')
+            // ->currencyFormat('{SYMBOL}{VALUE}')
+            // ->currencyThousandsSeparator('.')
+            // ->currencyDecimalPoint(',')
+            // ->filename($customer->name.'_'.$dataCollection->order_number)
             ->addItems($items)
-            ->notes($notes)
+            // ->notes($notes)
             ->logo(public_path('brand/logo_blue.png'));
             // You can additionally save generated invoice to configured disk
             //  ->save('public');
