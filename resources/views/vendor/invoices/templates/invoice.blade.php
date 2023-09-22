@@ -114,11 +114,11 @@
             body, h1, h2, h3, h4, h5, h6, table, th, tr, td, p, div {
                 line-height: 1.1;
             }
-            .party-header {
+            /* .party-header {
                 font-size: 0.8rem;
                 font-weight: 700;
-            }
-            /*.total-amount {
+            } */
+            .total-amount {
                 font-size: 12px;
                 font-weight: 700;
             }
@@ -134,7 +134,7 @@
             }
             .cool-gray {
                 color: #6B7280;
-            } */
+            }
         </style>
     </head>
 
