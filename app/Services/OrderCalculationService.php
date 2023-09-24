@@ -36,7 +36,7 @@ class OrderCalculationService extends BaseController
         $shippingPrice   = $getShipping->courier_cost;
 
         //grandTotal
-        if($voucher != NULL){
+        if($getOrder->fk_voucher_id != NULL && $getOrder->fk_voucher_id != ''){
             if($voucher->type == 1)
             {
                 $voucherAmount  = $voucher->amount;
