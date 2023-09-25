@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CheckoutRequest\CheckoutCreateRequest;
 use App\Interfaces\OrderInterface;
 use App\Models\Order;
+use App\Models\Voucher;
 use App\Models\HistoryVoucher;
 use App\Models\Order_product;
 use App\Models\User_shipping_address;
@@ -93,6 +94,8 @@ class CheckoutController extends BaseController
        $voucher       =  $request->data['voucher'];
        //checking product stock and price
         
+        $getVoucher = Voucher::where('id', $voucher)->first();
+
        $checkingdata =  $this->checkingCart($productOrder);
       
         if($checkingdata['arrayStatus'] == false && $checkingdata['arrayResponse']['out_of_stock'] >= 1)
@@ -303,14 +306,33 @@ class CheckoutController extends BaseController
                     'quantity'       => 1,
                     'name'           => $courier['agent'].'-'.$findCourier['arrayResponse'][0]['service'],
                 );
-                array_push($transformforMidtrans,$shippingBill);
                 
                 // customer information - midtrans
                 $getCalculation = $orderCalculationService->orderCalculation($insert['queryResponse']['data']['id']);
                 
+                $voucherAmount = 0;
+                $voucherBill = array(
+                    'id'             => 'No Voucher',
+                    'price'          => 0,
+                    'quantity'       => 1,
+                    'name'           => 'No Discount Voucher',
+                );
+
+                if($getVoucher)
+                {
+                    $voucherAmount  = -abs($getCalculation['arrayResponse']['discount']);
+                    $voucherBill = array(
+                        'id'             => $getVoucher->code,
+                        'price'          => $voucherAmount,
+                        'quantity'       => 1,
+                        'name'           => 'Discount Voucher',
+                    );
+                }
+
+                array_push($transformforMidtrans,$shippingBill,$voucherBill);
                 $transaction_detail = array(
-                    'order_id'      =>$getOrderNumber['arrayResponse']['invoice_number'],
-                    'gross_amount'  =>   $getCalculation['arrayResponse']['grand_total']
+                    'order_id'      =>  $getOrderNumber['arrayResponse']['invoice_number'],
+                    'gross_amount'  =>  $getCalculation['arrayResponse']['grand_total'],
                 );
 
                 $customerInfo = array(
