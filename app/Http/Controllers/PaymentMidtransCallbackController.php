@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
+use App\Models\HistoryVoucher;
 use App\Services\Midtrans\CallBackService;
 use Illuminate\Http\Request;
 
@@ -30,6 +31,7 @@ class PaymentMidtransCallbackController extends Controller
                     'payment_refrence_code' =>$notification->transaction_id,
                     'payment_method'    =>$notification->payment_type,
                 ]);
+                HistoryVoucher::where('order_id', $order->id)->delete();
             }
 
             if ($callback->isPending()) {
@@ -46,6 +48,7 @@ class PaymentMidtransCallbackController extends Controller
                     'payment_refrence_code' =>$notification->transaction_id,
                     'payment_method'    =>$notification->payment_type,
                 ]);
+                HistoryVoucher::where('order_id', $order->id)->delete();
             }
  
             return response()
