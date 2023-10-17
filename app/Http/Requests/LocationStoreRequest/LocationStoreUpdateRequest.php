@@ -29,9 +29,21 @@ class LocationStoreUpdateRequest extends FormRequest
             'fk_province'            =>   'required',
             'image_upload'           =>   'nullable',
             'description'            =>   'required',
-            'embed_map'              =>   'nullable',
+            'embed_map'              =>   'required',
             'id'                     =>   'required',
     
         ];
+    }
+
+    public function messages()
+    {
+        return [
+
+            'name.required'          => 'Nama perlu diisi',
+            'fk_province.required'   => 'Provinsi perlu diisi',
+            'description.required'   => 'Deskripsi perlu diisi',
+            'embed_map.required'     => 'Embed map perlu diisi',
+
+        ]; 
     }
 }
