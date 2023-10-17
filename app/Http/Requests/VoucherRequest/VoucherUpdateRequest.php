@@ -4,6 +4,7 @@ namespace App\Http\Requests\VoucherRequest;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
 
 class VoucherUpdateRequest extends FormRequest
 {
@@ -37,8 +38,18 @@ class VoucherUpdateRequest extends FormRequest
             'description'   => 'required',
             'type'          => 'required',
             'amount'        => 'required',
-            'start_date'    => 'nullable',
-            'end_date'      => 'nullable',
+            'start_date'    => 'nullable|date',
+            'end_date' => [
+                'nullable',
+                'date',
+                function ($attribute, $value, $fail) {
+                    $start_date = $this->input('start_date');
+    
+                    if ($start_date && $value && strtotime($start_date) > strtotime($value)) {
+                        $fail('End Date harus lebih besar atau sama dengan Start Date.');
+                    }
+                },
+            ],
             'max_usage'     => 'nullable',
             'is_active'     => 'required',
         ];
