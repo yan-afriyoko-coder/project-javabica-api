@@ -22,6 +22,10 @@ class GetByKey
       {
           $query->where('hot_news', 1);
       }
+      if (request()->has('status') && request()->get('status') === 'PUBLISH')
+      {
+          $query->where('status', 'PUBLISH');
+      }
       
     return $next($query);
   }
