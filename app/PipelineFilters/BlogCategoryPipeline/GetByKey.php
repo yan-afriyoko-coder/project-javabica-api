@@ -14,6 +14,10 @@ class GetByKey
       {
           $query->where('id', request()->get('by_id'));
       }
+      if (request()->has('status') && request()->get('status') == 1)
+      {
+          $query->where('status', 1);
+      }
 
     return $next($query);
   }
