@@ -27,6 +27,7 @@ class VoucherShowAllResource extends JsonResource
             'total'         => $this->resource['data']->total,
             'is_active'     => $this->resource['data']->is_active,
             'total_use'     => count($this->resource['data']->history_voucher),
+            'remaining'     => $this->resource['data']->total - count($this->resource['data']->history_voucher),
         ];
     }
 }
