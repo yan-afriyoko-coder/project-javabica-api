@@ -17,7 +17,9 @@ class MachineShowAllResource extends JsonResource
         return [
             'id'               => $this->resource['data']->id,
             'user_id'          => $this->resource['data']->user_id,
+            'username'         => $this->resource['data']->user->name,
             'product_id'       => $this->resource['data']->product_id,
+            'product_name'     => $this->resource['data']->product->name,
             'serial_number'    => $this->resource['data']->serial_number,
             'purchase_date'    => $this->resource['data']->purchase_date,
             'description'      => $this->resource['data']->description,

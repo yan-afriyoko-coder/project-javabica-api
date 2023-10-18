@@ -16,8 +16,14 @@ class GetByWord
 
         if($keyword) {
           
-          $query->where(function ($query)use ($keyword)  {
-              $query->where('serial_number','like', '%' .$keyword.'%');
+          $query->with(['user', 'product'])->where(function ($query)use ($keyword)  {
+              $query->orWhere('serial_number','like', '%' .$keyword.'%')
+                ->orWhereHas('user', function ($query) use ($keyword) {
+                    $query->where('name', 'like', '%' . $keyword . '%');
+                })
+                ->orWhereHas('product', function ($query) use ($keyword) {
+                    $query->where('name', 'like', '%' . $keyword . '%');
+                });
           });
           
         }
