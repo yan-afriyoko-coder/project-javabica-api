@@ -40,11 +40,11 @@ class TaxonomyCreateRequestValidation extends FormRequest
         return  [
             'parent'             =>   'nullable|numeric|exists:taxo_lists,id',
             'taxonomy_ref_key'   =>   'nullable|numeric',  
-            'taxonomy_name'      =>   'nullable',
+            'taxonomy_name'      =>   'required',
             'taxonomy_description'=>   'nullable',
             'taxonomy_slug'      =>   'nullable',  
             'taxonomy_type'      =>   'required|numeric|exists:taxo_types,id',
-            'taxonomy_image_upload'  => 'nullable',  
+            'taxonomy_image_upload'  => 'required',  
             'taxonomy_sort'      =>   'nullable|numeric',
             'taxonomy_status'    =>   'nullable|in:ACTIVE,INACTIVE',  
             
@@ -58,11 +58,13 @@ class TaxonomyCreateRequestValidation extends FormRequest
 
         'taxonomy_ref_key.numeric'  => 'taxonomy refrence key hanya dapat nomer',
 
+        'taxonomy_name.required'    => 'taxonomy type perlu diisi',
         'taxonomy_type.required'    => 'taxonomy type perlu diisi',
         'taxonomy_type.numeric'     => 'taxonomy type hanya dapat nomer',
         'taxonomy_type.exists'      => 'taxonomy type tidak id tidak tersedia',
 
         'taxonomy_sort.numeric'     => 'taxonomy sort hanya dapat nomor',
+        'taxonomy_image_upload.required'     => 'taxonomy Image perlu diisi',
 
       
         'taxonomy_status.in'        => 'hanya dapat ACTIVE,INACTIVE',
