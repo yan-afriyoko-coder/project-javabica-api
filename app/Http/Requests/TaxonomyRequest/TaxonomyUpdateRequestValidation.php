@@ -47,7 +47,7 @@ class TaxonomyUpdateRequestValidation extends FormRequest
             'taxonomy_description'      =>   'nullable',
             'taxonomy_slug'             =>   'nullable',  
             'taxonomy_type'             =>   'required|numeric|exists:taxo_types,id',
-            'taxonomy_image_upload'     =>   'required',  
+            'taxonomy_image_upload'     =>   'nullable',  
             'taxonomy_sort'             =>   'nullable|numeric',
             'taxonomy_status'           =>   'nullable|in:ACTIVE,INACTIVE',  
             'id'                        =>   'required|exists:taxo_lists,id'
@@ -69,7 +69,6 @@ class TaxonomyUpdateRequestValidation extends FormRequest
         'taxonomy_type.exists'      => 'taxonomy type tidak id tidak tersedia',
 
         'taxonomy_sort.numeric'     => 'taxonomy sort hanya dapat nomor',
-        'taxonomy_image_upload.required'     => 'taxonomy Image perlu diisi',
 
         'taxonomy_status.required'  => 'taxonomy status perlu diisi',
         'taxonomy_status.in'        => 'hanya dapat ACTIVE,INACTIVE',
