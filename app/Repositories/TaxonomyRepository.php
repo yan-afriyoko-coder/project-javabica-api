@@ -8,6 +8,7 @@ use App\Http\Resources\TaxonomyResource\ProductCollectionResource;
 use App\Http\Resources\TaxonomyResource\TaxonomyShowAllResource;
 use App\Models\Taxo_list;
 use App\Models\Taxo_type;
+use App\Models\Product_categories;
 use App\PipelineFilters\TaxonomyPipeline\GetByKey;
 use App\PipelineFilters\TaxonomyPipeline\GetByWord;
 use App\PipelineFilters\TaxonomyPipeline\UseSort;
@@ -156,15 +157,31 @@ class TaxonomyRepository extends BaseController implements TaxonomyInterface
     public function destroy($id)
     {
         try {
-                $remove =  Taxo_list::where('id',$id)->delete();
+                $remove =  Taxo_list::where('id',$id)->first();
+                $productCategory1 = Product_categories::where('fk_category_id', $remove->id)->exists();
 
-                if($remove == true)
-                {
-                    return $this->handleQueryArrayResponse($remove,'destroy taxonomy success');
+                if($remove->parent != '' || $remove->parent != NULL){
+                    $productCategory2 = Product_categories::where('fk_category_id', $remove->parent)->exists();
+                    if($productCategory1 && $productCategory2){
+                        
+                        return $this->handleQueryErrorArrayResponse($productCategory2,'Failed to delete subcategory because it is still used in the product');
+                    }
+                }
+
+                if($productCategory1){
+                    return $this->handleQueryErrorArrayResponse($productCategory1,'Failed to delete category because it is still used in the product');
                 }
                 else
                 {
-                    return $this->handleQueryErrorArrayResponse($remove,'destroy taxonomy fail');
+                    if($remove == true)
+                    {
+                        $remove->delete();
+                        return $this->handleQueryArrayResponse($remove,'destroy taxonomy success');
+                    }
+                    else
+                    {
+                        return $this->handleQueryErrorArrayResponse($remove,'destroy taxonomy fail');
+                    }
                 }
         } 
         catch (\Exception $e) {
