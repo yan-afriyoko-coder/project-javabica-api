@@ -9,6 +9,7 @@ use App\Http\Resources\TaxonomyResource\TaxonomyShowAllResource;
 use App\Models\Taxo_list;
 use App\Models\Taxo_type;
 use App\Models\Product_categories;
+use App\Models\Product_collection;
 use App\PipelineFilters\TaxonomyPipeline\GetByKey;
 use App\PipelineFilters\TaxonomyPipeline\GetByWord;
 use App\PipelineFilters\TaxonomyPipeline\UseSort;
@@ -159,6 +160,7 @@ class TaxonomyRepository extends BaseController implements TaxonomyInterface
         try {
                 $remove =  Taxo_list::where('id',$id)->first();
                 $productCategory1 = Product_categories::where('fk_category_id', $remove->id)->exists();
+                $productCollection = Product_collection::where('fk_collection_id', $remove->id)->exists();
 
                 if($remove->parent != '' || $remove->parent != NULL){
                     $productCategory2 = Product_categories::where('fk_category_id', $remove->parent)->exists();
@@ -168,8 +170,11 @@ class TaxonomyRepository extends BaseController implements TaxonomyInterface
                     }
                 }
 
-                if($productCategory1){
+                if($productCategory1 && !$productCollection){
                     return $this->handleQueryErrorArrayResponse($productCategory1,'Failed to delete category because it is still used in the product');
+                }
+                elseif(!$productCategory1 && $productCollection){
+                    return $this->handleQueryErrorArrayResponse($productCollection,'Failed to delete collection because it is still used in the product');
                 }
                 else
                 {
