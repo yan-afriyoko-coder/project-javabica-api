@@ -180,7 +180,22 @@ class RolePermissionController extends BaseController
         {
             if($request->show_type == 'getDirectPermissions') {
                 
-                $getPermission =   $user->getDirectPermissions();
+                // $getPermission =   $user->getDirectPermissions();
+                $showPermission = $this->permissionInterface->showUserPermission($request->all());
+                if($showPermission['queryStatus']) {
+
+                    return $this->handleResponse( $showPermission['queryResponse'],'show permission success',$request->all(),str_replace('/','.',$request->path()),201);
+                }
+                else {
+
+                    $data = array([
+                        'field' =>'show-user-permission',
+                        'message' =>'show user permission fail'
+                    ]);
+
+
+                    return  $this->handleError($data,$showPermission['queryMessage'],$request->all(),str_replace('/','.',$request->path()),422);
+                }
                 
             }
             else if($request->show_type == 'getPermissionsViaRoles') {
