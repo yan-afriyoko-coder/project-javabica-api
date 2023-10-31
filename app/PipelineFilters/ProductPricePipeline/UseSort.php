@@ -21,7 +21,8 @@ class UseSort
           $sort_type = 'desc';
         }
         
-         $query->orderBy(''.request()->get('sort_by').'',$sort_type);
+        //  $query->orderBy(''.request()->get('sort_by').'',$sort_type);
+         $query->orderBy('id','desc');
     }
     else  {
       $query->orderBy('created_at','desc');
