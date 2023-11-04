@@ -139,6 +139,8 @@
     </head>
 
     <body>
-        {{ $invoice->name }}
+        @php
+            echo '<h1>'.$invoice->name.'</h1>';
+        @endphp
     </body>
 </html>
