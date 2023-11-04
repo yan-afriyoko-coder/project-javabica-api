@@ -139,7 +139,7 @@
 </head>
 
 <body>
-    <?php if($invoice->logo): ?>
+    <?php if($invoice->logo): ?> 
         <table class="table mt-3">
             <tbody class="border-0">
                 <tr>
