@@ -16,7 +16,7 @@ class OrderDeliveryGeneratorServices
 {
     public function generate($dataCollection)
     {
-
+        dd($dataCollection);
         $companyDetail = new Party([
             'coporate_name'        => ''.config('javabica.corporate_name').'',
             'address'              => ''.config('javabica.address').'',

@@ -139,7 +139,6 @@
     </head>
 
     <body>
-        @dd($invoice);
         {{-- Header --}}
         @if($invoice->logo)
             <table class="table mt-3">
