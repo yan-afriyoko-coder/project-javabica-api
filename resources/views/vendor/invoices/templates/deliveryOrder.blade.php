@@ -139,6 +139,6 @@
     </head>
 
     <body>
-        <h1>testtt</h1>
+        {{ $invoice->name }}
     </body>
 </html>
