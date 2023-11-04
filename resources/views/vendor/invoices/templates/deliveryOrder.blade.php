@@ -108,7 +108,7 @@
             .text-uppercase {
                 text-transform: uppercase !important;
             }
-            * {
+            /** {
                 font-family: "DejaVu Sans";
             }
             body, h1, h2, h3, h4, h5, h6, table, th, tr, td, p, div {
@@ -134,7 +134,7 @@
             }
             .cool-gray {
                 color: #6B7280;
-            }
+            }   */
         </style>
     </head>
 
