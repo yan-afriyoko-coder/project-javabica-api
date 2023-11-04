@@ -142,5 +142,8 @@
         @php
             echo '<h1>'.$invoice->name.'</h1>';
         @endphp
+        <h1>
+            {{ $invoice->name }}
+        </h1>
     </body>
 </html>
