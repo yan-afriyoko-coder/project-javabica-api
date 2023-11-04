@@ -28,7 +28,6 @@ class OrderDeliveryController extends Controller
         if ($getOrder['queryStatus']) {
 
             $convertData = json_encode($getOrder['queryResponse']);
-            dd($convertData);
             $arrayData   = json_decode($convertData);
           
             return $orderInvoiceGenerator->generate($arrayData);
