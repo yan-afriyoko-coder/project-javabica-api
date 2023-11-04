@@ -15,11 +15,11 @@ class TaxonomyUpdateRequestValidation extends FormRequest
      */
     public function authorize()
     {
-        if(Auth::user()->hasRole('super_admin')) 
+        if(Auth::user()->hasRole('super_admin'))
         {
              return true;
         }
-        
+
         if(Auth::user()->can('taxonomy_update')) {
             return true;
         }
@@ -32,26 +32,26 @@ class TaxonomyUpdateRequestValidation extends FormRequest
      */
     protected function prepareForValidation()
     {
-    
-       
-       
-       
-       
+
+
+
+
+
     }
     public function rules()
     {
         return  [
             'parent'                    =>   'nullable|numeric|exists:taxo_lists,id',
-            'taxonomy_ref_key'          =>   'nullable|numeric',  
+            'taxonomy_ref_key'          =>   'nullable|numeric',
             'taxonomy_name'             =>   'required',
             'taxonomy_description'      =>   'nullable',
-            'taxonomy_slug'             =>   'nullable',  
+            'taxonomy_slug'             =>   'nullable',
             'taxonomy_type'             =>   'required|numeric|exists:taxo_types,id',
-            'taxonomy_image_upload'     =>   'nullable',  
+            'taxonomy_image_upload'     =>   'nullable',
             'taxonomy_sort'             =>   'nullable|numeric',
-            'taxonomy_status'           =>   'nullable|in:ACTIVE,INACTIVE',  
+            'taxonomy_status'           =>   'nullable|in:ACTIVE,INACTIVE',
             'id'                        =>   'required|exists:taxo_lists,id'
-            
+
         ];
     }
 
@@ -63,7 +63,7 @@ class TaxonomyUpdateRequestValidation extends FormRequest
 
         'taxonomy_ref_key.numeric'  => 'taxonomy refrence key hanya dapat nomer',
 
-        'taxonomy_name.required'    => 'taxonomy type perlu diisi',
+        'taxonomy_name.required'    => 'name perlu diisi',
         'taxonomy_type.required'    => 'taxonomy type perlu diisi',
         'taxonomy_type.numeric'     => 'taxonomy type hanya dapat nomer',
         'taxonomy_type.exists'      => 'taxonomy type tidak id tidak tersedia',
@@ -76,7 +76,7 @@ class TaxonomyUpdateRequestValidation extends FormRequest
         'id.required'               => 'taxonomy id perlu diisi',
         'id.exists'                 => 'taxonomy id tidak tersedia',
 
-       ]; 
+       ];
     }
 
 }
