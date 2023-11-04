@@ -19,7 +19,7 @@ class OrderDeliveryController extends Controller
 
     public function show(OrderDeliveryGetRequest $request, OrderDeliveryGeneratorServices $orderInvoiceGenerator)
     {
-        dd($request->all());
+      
         //get order
         $selectedColumn  = '*';
         $getOrder        = $this->orderInterface->show($request->only('by_id'), $selectedColumn, 'show_with_product');
@@ -28,6 +28,7 @@ class OrderDeliveryController extends Controller
         if ($getOrder['queryStatus']) {
 
             $convertData = json_encode($getOrder['queryResponse']);
+            dd($convertData);
             $arrayData   = json_decode($convertData);
           
             return $orderInvoiceGenerator->generate($arrayData);
