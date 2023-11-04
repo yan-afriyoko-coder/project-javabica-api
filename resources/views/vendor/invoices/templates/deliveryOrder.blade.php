@@ -108,7 +108,7 @@
             .text-uppercase {
                 text-transform: uppercase !important;
             }
-            /** {
+            * {
                 font-family: "DejaVu Sans";
             }
             body, h1, h2, h3, h4, h5, h6, table, th, tr, td, p, div {
@@ -134,7 +134,7 @@
             }
             .cool-gray {
                 color: #6B7280;
-            }   */
+            }
         </style>
     </head>
 
@@ -162,8 +162,8 @@
                 <tr>
                     <td class="border-0 pl-0" width="70%">
                         <h4 class="text-uppercase text-center">
-                            <strong>DELIVERY ORDER</strong> 
-                         
+                            <strong>DELIVERY ORDER</strong>
+
                         </h4>
                     </td>
                 </tr>
@@ -178,10 +178,10 @@
                         {{ __('invoices::invoice.buyer') }}
                     </th>
                     <th class="border-0" width="1%"></th>
-                    <th class="border-top-bottom pl-0 party-header" width="48.5%">     
+                    <th class="border-top-bottom pl-0 party-header" width="48.5%">
                         {{ __('invoices::invoice.invoice_info') }}
                     </th>
-                    
+
                 </tr>
             </thead>
             <tbody>
@@ -189,7 +189,7 @@
                     <td class="px-0">
                         @if($invoice->buyer->name)
                             <p class="buyer-name">
-                                {{ __('invoices::invoice.buyer_name') }}  <strong>{{ $invoice->buyer->name }}</strong> 
+                                {{ __('invoices::invoice.buyer_name') }}  <strong>{{ $invoice->buyer->name }}</strong>
                             </p>
                         @endif
                         @foreach($invoice->buyer->custom_fields as $key => $value)
@@ -197,10 +197,10 @@
                                 {{ ucfirst($key) }}: {{ $value }}
                             </p>
                         @endforeach
-                        
+
                     </td>
                     <td class="px-0">
-                       
+
                     <td  class="px-0">
                         <table class="table px-0" width="100%">
                           <thead>
@@ -213,7 +213,7 @@
                                 </td>
                                 <td class="border-1" >Nomor Invoice
                                   <span style="font-weight:700">
-                                    {{ $invoice->getSerialNumber() }}</span>  
+                                    {{ $invoice->getSerialNumber() }}</span>
                                 </td>
                             </tr>
                             <tr>
@@ -270,16 +270,16 @@
                         @if($item->note)
                         <p class="mt-2">catatan:</p>
                         <p class="cool-gray">{{ $item->note }}</p>
-                      
+
                         @endif
                     </td>
-                 
+
                     <td class="text-center">Item</td>
                     <td class="text-center"width="30%" >{{ $item->quantity }}</td>
-                
+
                 </tr>
                 @endforeach
-                 
+
                     <tr>
                         <td colspan="{{ $invoice->table_columns - 3 }}" ></td>
                         <td class="text-center pl-0" width="40%">Total Kuantitas</td>
@@ -294,11 +294,11 @@
                             {{ $invoice->total_product }}
                         </td>
                     </tr>
-     
+
             </tbody>
         </table>
-                 
-        
+
+
         @if($invoice->notes)
         <table class="table " width="100%">
             <tr  width="80%">
@@ -308,7 +308,7 @@
                 <td width="40%" ></td>
             </tr>
         </table>
-         
+
         @endif
 
         <table class="table mt-3 border-0">
@@ -319,7 +319,7 @@
                             <td class="text-center" width="width:80%">Pengirim</td>
                         </tr>
                         <tr class="border-0" width="80%">
-                            <td class="text-center" width="80%" > 
+                            <td class="text-center" width="80%" >
                                 <span >
                                 <br/>
                                 <br/>
@@ -337,7 +337,7 @@
                             <td class="text-center" width="width:80%">Gudang</td>
                         </tr>
                         <tr class="border-0" width="80%">
-                            <td class="text-center" width="80%" > 
+                            <td class="text-center" width="80%" >
                                 <span >
                                 <br/>
                                 <br/>
@@ -355,7 +355,7 @@
                             <td class="text-center" width="width:80%">Penerima</td>
                         </tr>
                         <tr class="border-0" width="80%">
-                            <td class="text-center" width="80%" > 
+                            <td class="text-center" width="80%" >
                                 <span >
                                 <br/>
                                 <br/>
