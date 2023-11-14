@@ -402,7 +402,17 @@
                             <td colspan="{{ $invoice->table_columns - 1 }}" class="border-0"></td>
                             <td class="text-right pl-0" width="20%">{{ __('Voucher') }}</td>
                             <td class="text-right pr-0">
-                                {{ $invoice->formatCurrency($voucherDiscount) }}
+                                - {{ $invoice->formatCurrency($voucherDiscount) }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="{{ $invoice->table_columns - 1 }}" class="border-0">
+                            
+                            </span>
+                            </td>
+                            <td class="text-right pl-0" style="font-weight:700">{{ __('invoices::invoice.total_amount') }}</td>
+                            <td class="text-right pr-0 total-amount">
+                                {{ $invoice->formatCurrency($invoice->total_amount - $voucherDiscount) }}
                             </td>
                         </tr>
                     @else
@@ -410,11 +420,21 @@
                             <td colspan="{{ $invoice->table_columns - 1 }}" class="border-0"></td>
                             <td class="text-right pl-0" width="20%">{{ __('Voucher') }}</td>
                             <td class="text-right pr-0">
-                                {{ $invoice->formatCurrency(($invoice->total_amount - $invoice->shipping_amount) - $voucherDiscount) }}
+                                - {{ $invoice->formatCurrency(($invoice->total_amount - $invoice->shipping_amount) - $voucherDiscount) }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="{{ $invoice->table_columns - 1 }}" class="border-0">
+                            
+                            </span>
+                            </td>
+                            <td class="text-right pl-0" style="font-weight:700">{{ __('invoices::invoice.total_amount') }}</td>
+                            <td class="text-right pr-0 total-amount">
+                                {{ $invoice->formatCurrency($invoice->total_amount - (($invoice->total_amount - $invoice->shipping_amount) - $voucherDiscount)) }}
                             </td>
                         </tr>
                     @endif
-                @endif
+                @else
                     <tr>
                         <td colspan="{{ $invoice->table_columns - 1 }}" class="border-0">
                         
@@ -422,9 +442,10 @@
                         </td>
                         <td class="text-right pl-0" style="font-weight:700">{{ __('invoices::invoice.total_amount') }}</td>
                         <td class="text-right pr-0 total-amount">
-                            {{ $invoice->formatCurrency($invoice->total_amount - $voucherDiscount) }}
+                            {{ $invoice->formatCurrency($invoice->total_amount) }}
                         </td>
                     </tr>
+                @endif
             </tbody>
         </table>
                  
