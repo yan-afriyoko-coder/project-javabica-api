@@ -211,6 +211,7 @@
                             </p>
                         <?php endforeach; ?>
                     </td>
+                    <td class="px-0"></td>
                     <td class="px-0">
                         <table class="table px-0" width="100%">
                             <thead>
