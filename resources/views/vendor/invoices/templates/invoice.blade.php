@@ -251,7 +251,7 @@
                                 <td class="border-1">
                                     Payment Status
                                     <br/><br/>
-                                    <?php if( $invoice->status == 'SUCCESS'): ?>
+                                    @if( $invoice->status == 'SUCCESS')
                                     <span style="color:green;font-weight:700">
                                         @php echo $invoice->status @endphp
                                     </span>
@@ -259,7 +259,7 @@
                                     <span style="font-weight:700">
                                         @php echo $invoice->status @endphp
                                     </span>
-                                    <?php endif; ?>
+                                    @endif
                                 </td>
                             </tr>
                           </thead>
@@ -275,17 +275,17 @@
                 <tr>
                     <th scope="col" class="border-0 pl-0">Kode</th>
                     <th scope="col" class="border-0 pl-0">@php echo __('invoices::invoice.description') @endphp</th>
-                    <?php if($invoice->hasItemUnits): ?>
+                    @if($invoice->hasItemUnits)
                         <th scope="col" class="text-center border-0">@php echo __('invoices::invoice.units') @endphp</th>
-                    <?php endif; ?>
+                    @endif
                     <th scope="col" class="text-center border-0">@php echo __('invoices::invoice.quantity') @endphp</th>
                     <th scope="col" class="text-right border-0">@php echo __('invoices::invoice.price') @endphp</th>
-                    <?php if($invoice->hasItemDiscount): ?>
+                    @if($invoice->hasItemDiscount)
                         <th scope="col" class="text-right border-0">@php echo __('invoices::invoice.discount') @endphp</th>
-                    <?php endif; ?>
-                    <?php if($invoice->hasItemTax): ?>
+                    @endif
+                    @if($invoice->hasItemTax)
                         <th scope="col" class="text-right border-0">@php echo __('invoices::invoice.tax') @endphp</th>
-                    <?php endif; ?>
+                    @endif
                     <th scope="col" class="text-right border-0 pr-0">@php echo __('invoices::invoice.sub_total') @endphp</th>
                 </tr>
             </thead>
@@ -298,32 +298,32 @@
                     </td>
                     <td class="pl-2"width="30%">
                         @php echo $item->title @endphp
-                        <?php if($item->description): ?>
+                        @if($item->description)
                             <p class="cool-gray">@php echo $item->description @endphp</p>
-                        <?php endif; ?>
-                        <?php if($item->note): ?>
+                        @endif
+                        @if($item->note)
                         <p class="mt-2">catatan:</p>
                         <p class="cool-gray">@php echo $item->note @endphp</p>
                       
-                        <?php endif; ?>
+                        @endif
                     </td>
-                    <?php if($invoice->hasItemUnits): ?>
+                    @if($invoice->hasItemUnits)
                         <td class="text-center">@php echo $item->units @endphp</td>
-                    <?php endif; ?>
+                    @endif
                     <td class="text-center">@php echo $item->quantity @endphp</td>
                     <td class="text-right">
                         @php echo $invoice->formatCurrency($item->price_per_unit) @endphp
                     </td>
-                    <?php if($invoice->hasItemDiscount): ?>
+                    @if($invoice->hasItemDiscount)
                         <td class="text-right">
                             @php echo $invoice->formatCurrency($item->discount) @endphp
                         </td>
-                    <?php endif; ?>
-                    <?php if($invoice->hasItemTax): ?>
+                    @endif
+                    @if($invoice->hasItemTax)
                         <td class="text-right">
                             @php echo $invoice->formatCurrency($item->tax) @endphp
                         </td>
-                    <?php endif; ?>
+                    @endif
 
                     <td class="text-right pr-0">
                         @php echo $invoice->formatCurrency($item->sub_total_price) @endphp
@@ -346,7 +346,7 @@
                         {!!Terbilang::make($invoice->total_amount - $voucherDiscount ,' rupiah', 'senilai '); !!}
                     </td>
                 </tr>
-                <?php if($invoice->hasItemOrInvoiceDiscount()): ?>
+                @if($invoice->hasItemOrInvoiceDiscount())
                  
                     <tr>
                           </td>
@@ -356,8 +356,8 @@
                             @php echo $invoice->formatCurrency($invoice->total_discount) @endphp
                         </td>
                     </tr>
-                <?php endif; ?>
-                <?php if($invoice->taxable_amount): ?>
+                @endif
+                @if($invoice->taxable_amount)
                     <tr>
                         <td colspan="@php echo $invoice->table_columns - 1 @endphp" class="border-0"></td>
                         <td class="text-right pl-0">@php echo __('invoices::invoice.taxable_amount') @endphp</td>
@@ -365,8 +365,8 @@
                             @php echo $invoice->formatCurrency($invoice->taxable_amount) @endphp
                         </td>
                     </tr>
-                <?php endif; ?>
-                <?php if($invoice->tax_rate): ?>
+                @endif
+                @if($invoice->tax_rate)
                     <tr>
                         <td colspan="@php echo $invoice->table_columns - 1 @endphp" class="border-0"></td>
                         <td class="text-right pl-0">@php echo __('invoices::invoice.tax_rate') @endphp</td>
@@ -374,8 +374,8 @@
                             @php echo $invoice->tax_rate @endphp%
                         </td>
                     </tr>
-                <?php endif; ?>
-                <?php if($invoice->hasItemOrInvoiceTax()): ?>
+                @endif
+                @if($invoice->hasItemOrInvoiceTax())
                     <tr>
                         <td colspan="@php echo $invoice->table_columns - 1 @endphp" class="border-0"></td>
                         <td class="text-right pl-0">@php echo __('invoices::invoice.total_taxes') @endphp</td>
@@ -383,8 +383,8 @@
                             @php echo $invoice->formatCurrency($invoice->total_taxes) @endphp
                         </td>
                     </tr>
-                <?php endif; ?>
-                <?php if($invoice->shipping_amount): ?>
+                @endif
+                @if($invoice->shipping_amount)
                     <tr>
                         <td colspan="@php echo $invoice->table_columns - 1 @endphp" class="border-0"></td>
                         <td class="text-right pl-0" width="20%">@php echo __('invoices::invoice.shipping') @endphp</td>
@@ -392,9 +392,9 @@
                             @php echo $invoice->formatCurrency($invoice->shipping_amount) @endphp
                         </td>
                     </tr>
-                <?php endif; ?>
-                <?php if ($invoice->voucher): ?>
-                    <?php if ($invoice->voucher->type == '1'): ?>
+                @endif
+                @if ($invoice->voucher)
+                    @if ($invoice->voucher->type == '1')
                         <tr>
                             <td colspan="@php echo $invoice->table_columns - 1 @endphp" class="border-0"></td>
                             <td class="text-right pl-0" width="20%">@php echo __('Voucher') @endphp</td>
@@ -430,7 +430,7 @@
                                 @php echo $invoice->formatCurrency($invoice->total_amount - (($invoice->total_amount - $invoice->shipping_amount) - $voucherDiscount)) @endphp
                             </td>
                         </tr>
-                    <?php endif; ?>
+                    @endif
                 @else
                     <tr>
                         <td colspan="@php echo $invoice->table_columns - 1 @endphp" class="border-0">
@@ -442,11 +442,11 @@
                             @php echo $invoice->formatCurrency($invoice->total_amount) @endphp
                         </td>
                     </tr>
-                <?php endif; ?>
+                @endif
             </tbody>
         </table>
-
-        <?php if($invoice->notes): ?>
+                 
+        @if($invoice->notes)
         <table class="table " width="100%">
             <tr  width="80%">
                 <td  class="border-1">
@@ -455,8 +455,9 @@
                 <td width="40%" ></td>
             </tr>
         </table>
-        <?php endif; ?>
-        {{--@if($invoice->notes)
+         
+        @endif
+        {{-- @if($invoice->notes)
             <p>
                 @php echo trans('invoices::invoice.notes') @endphp: {!! $invoice->notes !!}
             </p>
