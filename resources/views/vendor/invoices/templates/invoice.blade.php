@@ -197,7 +197,6 @@
             </thead>
             <tbody>
                 <tr>
-                   
                     <td class="px-0">
                         <?php if($invoice->buyer->name): ?>
                             <p class="buyer-name">
@@ -206,13 +205,11 @@
                             </p>
                             
                         <?php endif; ?>
-                        @foreach($invoice->buyer->custom_fields as $key => $value)
+                        <?php foreach($invoice->buyer->custom_fields as $key => $value): ?>
                             <p class="buyer-custom-field">
                                 {{ ucfirst($key) }}: {{ $value }}
                             </p>
-                        @endforeach
-                         
-                        
+                        <?php endforeach; ?>
                     </td>
                     <td class="px-0">
                        
