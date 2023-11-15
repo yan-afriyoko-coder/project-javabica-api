@@ -338,7 +338,15 @@
                         Terbilang :
                     </td>
                     <td colspan="5" style="border:1px solid #000;" class="px-2 ">
-                        <?php echo Terbilang::make($invoice->total_amount - $voucherDiscount, ' rupiah', 'senilai '); ?>
+                        <?php if($invoice->voucher): ?>
+                            <?php if($invoice->voucher->type == '1'): ?>
+                                <?php echo Terbilang::make($invoice->total_amount - $voucherDiscount, ' rupiah', 'senilai '); ?>
+                            <?php else: ?>
+                                <?php echo Terbilang::make($invoice->total_amount - (($invoice->total_amount - $invoice->shipping_amount) - $voucherDiscount), ' rupiah', 'senilai '); ?>
+                            <?php endif; ?>
+                        <?php else: ?>
+                            <?php echo Terbilang::make($invoice->total_amount, ' rupiah', 'senilai '); ?>
+                        <?php endif; ?>
                     </td>
                 </tr>
                 <?php if($invoice->hasItemOrInvoiceDiscount()): ?>
