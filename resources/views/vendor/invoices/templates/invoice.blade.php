@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>{{ $invoice->name }}</title>
+        <title>@php echo $invoice->name @endphp</title>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 
         <style type="text/css" media="screen">
@@ -158,12 +158,12 @@
                 <tbody class="border-0">
                     <tr>
                         <td  class="border-0 pl-0" width="20%">
-                            <img src="{{ $invoice->getLogo() }}" alt="logo" class="p-0" height="40">
+                            <img src="@php echo $invoice->getLogo() @endphp" alt="logo" class="p-0" height="40">
                         </td>
                         <td class="border-0">
-                            <p style="font-weight:700;margin-bottom:0px">{{$invoice->companyDetail->coporate_name}}</p>
-                            <p style="margin-bottom:1px">{{$invoice->companyDetail->address}}</p>
-                            <p style="margin-bottom:0px">Telp:{{$invoice->companyDetail->phone}} | email:{{$invoice->companyDetail->email}} | website:{{$invoice->companyDetail->website}} </p>
+                            <p style="font-weight:700;margin-bottom:0px">@php echo $invoice->companyDetail->coporate_name @endphp</p>
+                            <p style="margin-bottom:1px">@php echo $invoice->companyDetail->address @endphp</p>
+                            <p style="margin-bottom:0px">Telp:@php echo $invoice->companyDetail->phone @endphp | email:@php echo $invoice->companyDetail->email @endphp | website:@php echo $invoice->companyDetail->website @endphp </p>
                         </td>
                     </tr>
                 </tbody>
