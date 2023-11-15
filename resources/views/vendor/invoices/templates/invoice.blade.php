@@ -151,9 +151,7 @@
             }
         @endphp
         {{-- Header --}}
-        @if($invoice->logo)
-          
-          
+        <?php if($invoice->logo): ?>
             <table class="table mt-3">
                 <tbody class="border-0">
                     <tr>
@@ -168,14 +166,14 @@
                     </tr>
                 </tbody>
             </table>
-        @endif
+        <?php endif; ?>
 
         <table class="table mt-3">
             <tbody>
                 <tr>
                     <td class="border-0 pl-0" width="70%">
                         <h4 class="text-uppercase text-center">
-                            <strong>{{ $invoice->name }}</strong> 
+                            <strong>@php echo $invoice->name @endphp</strong> 
                             
                         </h4>
                     </td>
@@ -188,33 +186,30 @@
             <thead>
                 <tr>
                     <th class="border-top-bottom pl-0 party-header" >
-                        {{ __('invoices::invoice.buyer') }}
+                        @php echo __('invoices::invoice.buyer') @endphp
                     </th>
                     <th class="border-0" width="1%"></th>
                     <th class="border-top-bottom pl-0 party-header" width="48.5%">     
-                        {{ __('invoices::invoice.invoice_info') }}
+                        @php echo __('invoices::invoice.invoice_info') @endphp
                     </th>
                     
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                   
                     <td class="px-0">
-                        @if($invoice->buyer->name)
+                        <?php if($invoice->buyer->name): ?>
                             <p class="buyer-name">
-                                {{ __('invoices::invoice.buyer_name') }}  <strong>{{ $invoice->buyer->name }}</strong>
+                                @php echo __('invoices::invoice.buyer_name') @endphp  <strong>@php echo $invoice->buyer->name @endphp</strong>
                             
                             </p>
                             
-                        @endif
-                        @foreach($invoice->buyer->custom_fields as $key => $value)
+                        <?php endif; ?>
+                        <?php foreach($invoice->buyer->custom_fields as $key => $value): ?>
                             <p class="buyer-custom-field">
-                                {{ ucfirst($key) }}: {{ $value }}
+                                @php echo ucfirst($key) @endphp: @php echo $value @endphp
                             </p>
-                        @endforeach
-                         
-                        
+                        <?php endforeach; ?>
                     </td>
                     <td class="px-0">
                        
@@ -225,12 +220,12 @@
                                 <td class="border-1 px-1" width="50%">
                                   Date (dd/mm/yyyy)<br/>
                                   <span style="font-weight:700">
-                                    {{ $invoice->getDate() }}
+                                    @php echo $invoice->getDate() @endphp
                                 </span>
                                 </td>
                                 <td class="border-1" >Invoice No
                                   <span style="font-weight:700">
-                                    {{ $invoice->getSerialNumber() }}</span>  
+                                    @php echo $invoice->getSerialNumber() @endphp</span>  
                                 </td>
                             </tr>
                             <tr>
@@ -248,21 +243,23 @@
                             <tr>
                                 <td class="border-1">
                                     <span>
-                                        {!! DNS2D::getBarcodeHTML(''.$invoice->getSerialNumber().'', 'QRCODE',2,2) !!}
+                                        @php
+                                            echo DNS2D::getBarcodeHTML(''.$invoice->getSerialNumber().'', 'QRCODE', 2, 2);
+                                        @endphp
                                     </span>
                                 </td>
                                 <td class="border-1">
                                     Payment Status
                                     <br/><br/>
-                                    @if( $invoice->status == 'SUCCESS')
+                                    <?php if( $invoice->status == 'SUCCESS'): ?>
                                     <span style="color:green;font-weight:700">
-                                        {{ $invoice->status }}
+                                        @php echo $invoice->status @endphp
                                     </span>
                                     @else 
                                     <span style="font-weight:700">
-                                        {{ $invoice->status }}
+                                        @php echo $invoice->status @endphp
                                     </span>
-                                    @endif
+                                    <?php endif; ?>
                                 </td>
                             </tr>
                           </thead>
@@ -277,19 +274,19 @@
             <thead>
                 <tr>
                     <th scope="col" class="border-0 pl-0">Kode</th>
-                    <th scope="col" class="border-0 pl-0">{{ __('invoices::invoice.description') }}</th>
-                    @if($invoice->hasItemUnits)
-                        <th scope="col" class="text-center border-0">{{ __('invoices::invoice.units') }}</th>
-                    @endif
-                    <th scope="col" class="text-center border-0">{{ __('invoices::invoice.quantity') }}</th>
-                    <th scope="col" class="text-right border-0">{{ __('invoices::invoice.price') }}</th>
-                    @if($invoice->hasItemDiscount)
-                        <th scope="col" class="text-right border-0">{{ __('invoices::invoice.discount') }}</th>
-                    @endif
-                    @if($invoice->hasItemTax)
-                        <th scope="col" class="text-right border-0">{{ __('invoices::invoice.tax') }}</th>
-                    @endif
-                    <th scope="col" class="text-right border-0 pr-0">{{ __('invoices::invoice.sub_total') }}</th>
+                    <th scope="col" class="border-0 pl-0">@php echo __('invoices::invoice.description') @endphp</th>
+                    <?php if($invoice->hasItemUnits): ?>
+                        <th scope="col" class="text-center border-0">@php echo __('invoices::invoice.units') @endphp</th>
+                    <?php endif; ?>
+                    <th scope="col" class="text-center border-0">@php echo __('invoices::invoice.quantity') @endphp</th>
+                    <th scope="col" class="text-right border-0">@php echo __('invoices::invoice.price') @endphp</th>
+                    <?php if($invoice->hasItemDiscount): ?>
+                        <th scope="col" class="text-right border-0">@php echo __('invoices::invoice.discount') @endphp</th>
+                    <?php endif; ?>
+                    <?php if($invoice->hasItemTax): ?>
+                        <th scope="col" class="text-right border-0">@php echo __('invoices::invoice.tax') @endphp</th>
+                    <?php endif; ?>
+                    <th scope="col" class="text-right border-0 pr-0">@php echo __('invoices::invoice.sub_total') @endphp</th>
                 </tr>
             </thead>
             <tbody>
@@ -300,36 +297,36 @@
                         {{$item->product_code}}
                     </td>
                     <td class="pl-2"width="30%">
-                        {{ $item->title }}
-                        @if($item->description)
-                            <p class="cool-gray">{{ $item->description }}</p>
-                        @endif
-                        @if($item->note)
+                        @php echo $item->title @endphp
+                        <?php if($item->description): ?>
+                            <p class="cool-gray">@php echo $item->description @endphp</p>
+                        <?php endif; ?>
+                        <?php if($item->note): ?>
                         <p class="mt-2">catatan:</p>
-                        <p class="cool-gray">{{ $item->note }}</p>
+                        <p class="cool-gray">@php echo $item->note @endphp</p>
                       
-                        @endif
+                        <?php endif; ?>
                     </td>
-                    @if($invoice->hasItemUnits)
-                        <td class="text-center">{{ $item->units }}</td>
-                    @endif
-                    <td class="text-center">{{ $item->quantity }}</td>
+                    <?php if($invoice->hasItemUnits): ?>
+                        <td class="text-center">@php echo $item->units @endphp</td>
+                    <?php endif; ?>
+                    <td class="text-center">@php echo $item->quantity @endphp</td>
                     <td class="text-right">
-                        {{ $invoice->formatCurrency($item->price_per_unit) }}
+                        @php echo $invoice->formatCurrency($item->price_per_unit) @endphp
                     </td>
-                    @if($invoice->hasItemDiscount)
+                    <?php if($invoice->hasItemDiscount): ?>
                         <td class="text-right">
-                            {{ $invoice->formatCurrency($item->discount) }}
+                            @php echo $invoice->formatCurrency($item->discount) @endphp
                         </td>
-                    @endif
-                    @if($invoice->hasItemTax)
+                    <?php endif; ?>
+                    <?php if($invoice->hasItemTax): ?>
                         <td class="text-right">
-                            {{ $invoice->formatCurrency($item->tax) }}
+                            @php echo $invoice->formatCurrency($item->tax) @endphp
                         </td>
-                    @endif
+                    <?php endif; ?>
 
                     <td class="text-right pr-0">
-                        {{ $invoice->formatCurrency($item->sub_total_price) }}
+                        @php echo $invoice->formatCurrency($item->sub_total_price) @endphp
                     </td>
                 </tr>
                 @endforeach
@@ -349,128 +346,132 @@
                         {!!Terbilang::make($invoice->total_amount - $voucherDiscount ,' rupiah', 'senilai '); !!}
                     </td>
                 </tr>
-                @if($invoice->hasItemOrInvoiceDiscount())
+                <?php if($invoice->hasItemOrInvoiceDiscount()): ?>
                  
                     <tr>
                           </td>
-                        <td colspan="{{ $invoice->table_columns - 1 }}" class="border-0"></td>
-                        <td class="text-right pl-0">{{ __('invoices::invoice.total_discount') }}</td>
+                        <td colspan="@php echo $invoice->table_columns - 1 @endphp" class="border-0"></td>
+                        <td class="text-right pl-0">@php echo __('invoices::invoice.total_discount') @endphp</td>
                         <td class="text-right pr-0">
-                            {{ $invoice->formatCurrency($invoice->total_discount) }}
+                            @php echo $invoice->formatCurrency($invoice->total_discount) @endphp
                         </td>
                     </tr>
-                @endif
-                @if($invoice->taxable_amount)
+                <?php endif; ?>
+                <?php if($invoice->taxable_amount): ?>
                     <tr>
-                        <td colspan="{{ $invoice->table_columns - 1 }}" class="border-0"></td>
-                        <td class="text-right pl-0">{{ __('invoices::invoice.taxable_amount') }}</td>
+                        <td colspan="@php echo $invoice->table_columns - 1 @endphp" class="border-0"></td>
+                        <td class="text-right pl-0">@php echo __('invoices::invoice.taxable_amount') @endphp</td>
                         <td class="text-right pr-0">
-                            {{ $invoice->formatCurrency($invoice->taxable_amount) }}
+                            @php echo $invoice->formatCurrency($invoice->taxable_amount) @endphp
                         </td>
                     </tr>
-                @endif
-                @if($invoice->tax_rate)
+                <?php endif; ?>
+                <?php if($invoice->tax_rate): ?>
                     <tr>
-                        <td colspan="{{ $invoice->table_columns - 1 }}" class="border-0"></td>
-                        <td class="text-right pl-0">{{ __('invoices::invoice.tax_rate') }}</td>
+                        <td colspan="@php echo $invoice->table_columns - 1 @endphp" class="border-0"></td>
+                        <td class="text-right pl-0">@php echo __('invoices::invoice.tax_rate') @endphp</td>
                         <td class="text-right pr-0">
-                            {{ $invoice->tax_rate }}%
+                            @php echo $invoice->tax_rate @endphp%
                         </td>
                     </tr>
-                @endif
-                @if($invoice->hasItemOrInvoiceTax())
+                <?php endif; ?>
+                <?php if($invoice->hasItemOrInvoiceTax()): ?>
                     <tr>
-                        <td colspan="{{ $invoice->table_columns - 1 }}" class="border-0"></td>
-                        <td class="text-right pl-0">{{ __('invoices::invoice.total_taxes') }}</td>
+                        <td colspan="@php echo $invoice->table_columns - 1 @endphp" class="border-0"></td>
+                        <td class="text-right pl-0">@php echo __('invoices::invoice.total_taxes') @endphp</td>
                         <td class="text-right pr-0">
-                            {{ $invoice->formatCurrency($invoice->total_taxes) }}
+                            @php echo $invoice->formatCurrency($invoice->total_taxes) @endphp
                         </td>
                     </tr>
-                @endif
-                @if($invoice->shipping_amount)
+                <?php endif; ?>
+                <?php if($invoice->shipping_amount): ?>
                     <tr>
-                        <td colspan="{{ $invoice->table_columns - 1 }}" class="border-0"></td>
-                        <td class="text-right pl-0" width="20%">{{ __('invoices::invoice.shipping') }}</td>
+                        <td colspan="@php echo $invoice->table_columns - 1 @endphp" class="border-0"></td>
+                        <td class="text-right pl-0" width="20%">@php echo __('invoices::invoice.shipping') @endphp</td>
                         <td class="text-right pr-0">
-                            {{ $invoice->formatCurrency($invoice->shipping_amount) }}
+                            @php echo $invoice->formatCurrency($invoice->shipping_amount) @endphp
                         </td>
                     </tr>
-                @endif
-                @if ($invoice->voucher)
-                    @if ($invoice->voucher->type == '1')
+                <?php endif; ?>
+                <?php if ($invoice->voucher): ?>
+                    <?php if ($invoice->voucher->type == '1'): ?>
                         <tr>
-                            <td colspan="{{ $invoice->table_columns - 1 }}" class="border-0"></td>
-                            <td class="text-right pl-0" width="20%">{{ __('Voucher') }}</td>
+                            <td colspan="@php echo $invoice->table_columns - 1 @endphp" class="border-0"></td>
+                            <td class="text-right pl-0" width="20%">@php echo __('Voucher') @endphp</td>
                             <td class="text-right pr-0">
-                                - {{ $invoice->formatCurrency($voucherDiscount) }}
+                                - @php echo $invoice->formatCurrency($voucherDiscount) @endphp
                             </td>
                         </tr>
                         <tr>
-                            <td colspan="{{ $invoice->table_columns - 1 }}" class="border-0">
+                            <td colspan="@php echo $invoice->table_columns - 1 @endphp" class="border-0">
                             
                             </span>
                             </td>
-                            <td class="text-right pl-0" style="font-weight:700">{{ __('invoices::invoice.total_amount') }}</td>
+                            <td class="text-right pl-0" style="font-weight:700">@php echo __('invoices::invoice.total_amount') @endphp</td>
                             <td class="text-right pr-0 total-amount">
-                                {{ $invoice->formatCurrency($invoice->total_amount - $voucherDiscount) }}
+                                @php echo $invoice->formatCurrency($invoice->total_amount - $voucherDiscount) @endphp
                             </td>
                         </tr>
                     @else
                         <tr>
-                            <td colspan="{{ $invoice->table_columns - 1 }}" class="border-0"></td>
-                            <td class="text-right pl-0" width="20%">{{ __('Voucher') }}</td>
+                            <td colspan="@php echo $invoice->table_columns - 1 @endphp" class="border-0"></td>
+                            <td class="text-right pl-0" width="20%">@php echo __('Voucher') @endphp</td>
                             <td class="text-right pr-0">
-                                - {{ $invoice->formatCurrency(($invoice->total_amount - $invoice->shipping_amount) - $voucherDiscount) }}
+                                - @php echo $invoice->formatCurrency(($invoice->total_amount - $invoice->shipping_amount) - $voucherDiscount) @endphp
                             </td>
                         </tr>
                         <tr>
-                            <td colspan="{{ $invoice->table_columns - 1 }}" class="border-0">
+                            <td colspan="@php echo $invoice->table_columns - 1 @endphp" class="border-0">
                             
                             </span>
                             </td>
-                            <td class="text-right pl-0" style="font-weight:700">{{ __('invoices::invoice.total_amount') }}</td>
+                            <td class="text-right pl-0" style="font-weight:700">@php echo __('invoices::invoice.total_amount') @endphp</td>
                             <td class="text-right pr-0 total-amount">
-                                {{ $invoice->formatCurrency($invoice->total_amount - (($invoice->total_amount - $invoice->shipping_amount) - $voucherDiscount)) }}
+                                @php echo $invoice->formatCurrency($invoice->total_amount - (($invoice->total_amount - $invoice->shipping_amount) - $voucherDiscount)) @endphp
                             </td>
                         </tr>
-                    @endif
+                    <?php endif; ?>
                 @else
                     <tr>
-                        <td colspan="{{ $invoice->table_columns - 1 }}" class="border-0">
+                        <td colspan="@php echo $invoice->table_columns - 1 @endphp" class="border-0">
                         
                         </span>
                         </td>
-                        <td class="text-right pl-0" style="font-weight:700">{{ __('invoices::invoice.total_amount') }}</td>
+                        <td class="text-right pl-0" style="font-weight:700">@php echo __('invoices::invoice.total_amount') @endphp</td>
                         <td class="text-right pr-0 total-amount">
-                            {{ $invoice->formatCurrency($invoice->total_amount) }}
+                            @php echo $invoice->formatCurrency($invoice->total_amount) @endphp
                         </td>
                     </tr>
-                @endif
+                <?php endif; ?>
             </tbody>
         </table>
-                 
-        @if($invoice->notes)
+
+        <?php if($invoice->notes): ?>
         <table class="table " width="100%">
             <tr  width="80%">
                 <td  class="border-1">
-                    {{ trans('invoices::invoice.notes') }}: {!! $invoice->notes !!}
+                    @php echo trans('invoices::invoice.notes') @endphp: 
+                    <fieldset>
+                        @php
+                            echo "$invoice->notes";
+                        @endphp
+                    </fieldset>
                 </td>
                 <td width="40%" ></td>
             </tr>
         </table>
-         
-        @endif
-        {{-- @if($invoice->notes)
+        <?php endif; ?>
+        {{--@if($invoice->notes)
             <p>
-                {{ trans('invoices::invoice.notes') }}: {!! $invoice->notes !!}
+                @php echo trans('invoices::invoice.notes') @endphp: {!! $invoice->notes !!}
             </p>
         @endif --}}
 
         {{-- <p>
-            {{ trans('invoices::invoice.amount_in_words') }}: {{ $invoice->getTotalAmountInWords() }}
+            @php echo trans('invoices::invoice.amount_in_words') @endphp: @php echo $invoice->getTotalAmountInWords() @endphp
         </p>
         <p>
-            {{ trans('invoices::invoice.pay_until') }}: {{ $invoice->getPayUntilDate() }}
+            @php echo trans('invoices::invoice.pay_until') @endphp: @php echo $invoice->getPayUntilDate() @endphp
         </p> --}}
 
         <script type="text/php">
