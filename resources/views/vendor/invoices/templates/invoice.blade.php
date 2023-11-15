@@ -450,12 +450,7 @@
         <table class="table " width="100%">
             <tr  width="80%">
                 <td  class="border-1">
-                    @php echo trans('invoices::invoice.notes') @endphp: 
-                    <fieldset>
-                        @php
-                            echo "$invoice->notes";
-                        @endphp
-                    </fieldset>
+                    @php echo trans('invoices::invoice.notes') @endphp: {!! $invoice->notes !!}
                 </td>
                 <td width="40%" ></td>
             </tr>
